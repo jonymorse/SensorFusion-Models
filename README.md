@@ -1,13 +1,14 @@
-# ForgeCAD box
+# Sensor Fusion Models
 
-This folder contains a minimal ForgeCAD setup with one parametric box model.
+This folder contains the ForgeCAD models and supporting scripts for the sensor
+fusion project's 3D design work.
 
 ## Commands
 
 ```powershell
-npm.cmd run check
-npm.cmd run preview
-npm.cmd run export:step
+npm.cmd run check:coupon
+npm.cmd run check:thermal
+npm.cmd run check:realsense
 npm.cmd run studio
 ```
 

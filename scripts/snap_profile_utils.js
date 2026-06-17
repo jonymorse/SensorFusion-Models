@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const geometryPath = path.join(__dirname, "snap_fit_geometry.js");
+const geometryPath = path.join(__dirname, "..", "models", "snap_fit_geometry.js");
 
 function parseArgs(argv) {
   const options = {};
@@ -74,8 +74,8 @@ function replaceProfileBlock(source, profileName, nextBlock) {
 }
 
 function readProfiles() {
-  delete require.cache[require.resolve("./snap_fit_geometry.js")];
-  const geometry = require("./snap_fit_geometry.js");
+  delete require.cache[require.resolve("../models/snap_fit_geometry.js")];
+  const geometry = require("../models/snap_fit_geometry.js");
   return geometry.snapProfiles;
 }
 
