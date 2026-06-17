@@ -3,6 +3,8 @@
 
 const snapFitGeometry = require("./scripts/snap_fit_geometry.js");
 
+// Reference stack copied from the full thermal target so the coupon sits in the same
+// front-plate / frame / back-plate relationship.
 const frontThickness = 3.5;
 const edgeChamfer = 0.4;
 const couponGap = 18;
@@ -10,25 +12,25 @@ const couponColor = "#8c8c8c";
 const frontPlateInset = 12;
 
 const layoutMode = Param.choice(
-  "Layout",
+  "Setup: Layout",
   "assembled",
   ["assembled", "separated"]
 );
 
 const snapSetup = Param.choice(
-  "Snap Profile",
+  "Setup: Snap Profile",
   "current",
   ["current", "candidate"]
 );
 
 const clearanceVariant = Param.choice(
-  "Clearance Variant",
+  "Setup: Clearance Variant",
   "current",
   ["current", "loose", "tight"]
 );
 
 const couponPart = Param.choice(
-  "Coupon Part",
+  "Setup: Coupon Part",
   "both",
   [
     "both",
@@ -53,60 +55,83 @@ const baseSnapWindowClearance = snapFitGeometry.resolveSnapWindowClearance(
   clearanceVariant
 );
 
-const sliderSnapTabWidth = Param.number(
-  "Snap Tab Width",
+// Shared interface dimensions:
+// These affect both sides because the hook and socket have to agree on the same
+// basic mating envelope.
+const sharedSnapTabWidth = Param.number(
+  "Interface: Snap Tab Width",
   baseSnapTabWidth,
   { min: 12, max: 24, step: 0.1, unit: "mm" }
 );
-const sliderSnapTabThickness = Param.number(
-  "Snap Tab Thickness",
-  baseSnapTabThickness,
-  { min: 1.2, max: 4, step: 0.05, unit: "mm" }
-);
-const sliderSnapTabDepth = Param.number(
-  "Snap Tab Depth",
+const sharedLatchDepth = Param.number(
+  "Interface: Latch Depth",
   baseSnapTabDepth,
   { min: 4, max: 12, step: 0.1, unit: "mm" }
 );
-const sliderSnapBarbHeight = Param.number(
-  "Snap Barb Height",
+const sharedSnapBarbHeight = Param.number(
+  "Interface: Snap Barb Height",
   baseSnapBarbHeight,
   { min: 0.6, max: 3, step: 0.05, unit: "mm" }
 );
-const sliderSnapBarbProjection = Param.number(
-  "Snap Barb Projection",
+const hookOnlyExtraBarbHeight = Param.number(
+  "Hook: Extra Barb Height",
+  0,
+  { min: -1, max: 2, step: 0.05, unit: "mm" }
+);
+const snapOnlyTabThickness = Param.number(
+  "Hook: Snap Tab Thickness",
+  baseSnapTabThickness,
+  { min: 1.2, max: 4, step: 0.05, unit: "mm" }
+);
+const snapOnlyTabDepth = Param.number(
+  "Hook: Extra Tab Depth",
+  0,
+  { min: -2, max: 4, step: 0.1, unit: "mm" }
+);
+const snapOnlyBarbProjection = Param.number(
+  "Hook: Snap Barb Projection",
   baseSnapBarbProjection,
   { min: 0.2, max: 2.5, step: 0.05, unit: "mm" }
 );
-const sliderSnapWindowClearance = Param.number(
-  "Snap Window Clearance",
+// Socket-side tuning:
+// Keep this fixed while tuning hook geometry if you want a stable reference socket.
+const socketOnlyWindowClearance = Param.number(
+  "Socket: Snap Window Clearance",
   baseSnapWindowClearance,
   { min: 0, max: 2, step: 0.05, unit: "mm" }
 );
 
 const snapTabWidth =
   snapSetup === "candidate"
-    ? sliderSnapTabWidth
+    ? sharedSnapTabWidth
     : baseSnapTabWidth;
 const snapTabThickness =
   snapSetup === "candidate"
-    ? sliderSnapTabThickness
+    ? snapOnlyTabThickness
     : baseSnapTabThickness;
 const snapTabDepth =
   snapSetup === "candidate"
-    ? sliderSnapTabDepth
+    ? sharedLatchDepth + snapOnlyTabDepth
+    : baseSnapTabDepth;
+const latchDepth =
+  snapSetup === "candidate"
+    ? sharedLatchDepth
     : baseSnapTabDepth;
 const snapBarbHeight =
   snapSetup === "candidate"
-    ? sliderSnapBarbHeight
+    ? sharedSnapBarbHeight + hookOnlyExtraBarbHeight
+    : baseSnapBarbHeight;
+const latchBarbHeight =
+  snapSetup === "candidate"
+    ? sharedSnapBarbHeight
     : baseSnapBarbHeight;
 const snapBarbProjection =
   snapSetup === "candidate"
-    ? sliderSnapBarbProjection
+    ? snapOnlyBarbProjection
     : baseSnapBarbProjection;
 const snapWindowClearance =
   snapSetup === "candidate"
-    ? sliderSnapWindowClearance
+    ? socketOnlyWindowClearance
     : baseSnapWindowClearance;
 
 const couponLength = 46;
@@ -120,7 +145,7 @@ const assembledLatchOffsetX = 0;
 const neckZ = backPlateZ - snapTabDepth;
 const hookTipZ = neckZ + snapBarbHeight * 0.55;
 const hookTopZ = neckZ + snapBarbHeight;
-const frameWindowZ = frontThickness + snapTabDepth - snapBarbHeight / 2;
+const frameWindowZ = frontThickness + latchDepth - latchBarbHeight / 2;
 
 const frameWallBlank = chamfer(
   box(frameSocketWidth, couponLength, frameDepth),
@@ -141,7 +166,7 @@ const frontPlateStrip = chamfer(
 const frameSnapWindow = box(
   frameSocketWidth + 2,
   snapTabWidth + snapWindowClearance,
-  snapBarbHeight + snapWindowClearance
+  latchBarbHeight + snapWindowClearance
 ).translate(
   -frameSocketWidth / 2,
   0,

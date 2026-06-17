@@ -21,9 +21,9 @@ const snapProfiles = {
     backThickness: 3,
     snapTabWidth: 18,
     snapTabThickness: 2.2,
-    snapTabDepth: 8,
-    snapBarbHeight: 1.7999999999999998,
-    snapBarbProjection: 1,
+    snapTabDepth: 8.4,
+    snapBarbHeight: 2.3,
+    snapBarbProjection: 2.5,
     snapWindowClearance: {
       tight: 0.45,
       current: 0.9,

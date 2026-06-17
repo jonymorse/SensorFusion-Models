@@ -151,28 +151,58 @@ function pickSnapshot(snapshots, snapshotName) {
 
 function buildPromotedValues(baseValues, snapshot) {
   const overrides = snapshot.overrides || {};
-  const clearanceVariant = overrides["Clearance Variant"] || "current";
+  const clearanceVariant =
+    overrides["Setup: Clearance Variant"] ||
+    overrides["Clearance Variant"] ||
+    "current";
   const values = {
     ...baseValues,
   };
 
-  if (overrides["Snap Tab Width"] !== undefined) {
-    values.snapTabWidth = Number(overrides["Snap Tab Width"]);
+  const sharedSnapTabWidth =
+    overrides["Interface: Snap Tab Width"] ??
+    overrides["Snap Tab Width"];
+  const snapTabThickness =
+    overrides["Hook: Snap Tab Thickness"] ??
+    overrides["Snap Tab Thickness"];
+  const sharedLatchDepth =
+    overrides["Interface: Latch Depth"] ??
+    overrides["Snap Tab Depth"];
+  const extraTabDepth =
+    overrides["Hook: Extra Tab Depth"] ?? 0;
+  const sharedSnapBarbHeight =
+    overrides["Interface: Snap Barb Height"] ??
+    overrides["Snap Barb Height"];
+  const extraBarbHeight =
+    overrides["Hook: Extra Barb Height"] ?? 0;
+  const snapBarbProjection =
+    overrides["Hook: Snap Barb Projection"] ??
+    overrides["Snap Barb Projection"];
+  const snapWindowClearance =
+    overrides["Socket: Snap Window Clearance"] ??
+    overrides["Snap Window Clearance"];
+
+  if (sharedSnapTabWidth !== undefined) {
+    values.snapTabWidth = Number(sharedSnapTabWidth);
   }
-  if (overrides["Snap Tab Thickness"] !== undefined) {
-    values.snapTabThickness = Number(overrides["Snap Tab Thickness"]);
+  if (snapTabThickness !== undefined) {
+    values.snapTabThickness = Number(snapTabThickness);
   }
-  if (overrides["Snap Tab Depth"] !== undefined) {
-    values.snapTabDepth = Number(overrides["Snap Tab Depth"]);
+  if (sharedLatchDepth !== undefined || extraTabDepth !== undefined) {
+    values.snapTabDepth =
+      Number(sharedLatchDepth ?? values.snapTabDepth) +
+      Number(extraTabDepth ?? 0);
   }
-  if (overrides["Snap Barb Height"] !== undefined) {
-    values.snapBarbHeight = Number(overrides["Snap Barb Height"]);
+  if (sharedSnapBarbHeight !== undefined || extraBarbHeight !== undefined) {
+    values.snapBarbHeight =
+      Number(sharedSnapBarbHeight ?? values.snapBarbHeight) +
+      Number(extraBarbHeight ?? 0);
   }
-  if (overrides["Snap Barb Projection"] !== undefined) {
-    values.snapBarbProjection = Number(overrides["Snap Barb Projection"]);
+  if (snapBarbProjection !== undefined) {
+    values.snapBarbProjection = Number(snapBarbProjection);
   }
-  if (overrides["Snap Window Clearance"] !== undefined) {
-    const clearanceValue = Number(overrides["Snap Window Clearance"]);
+  if (snapWindowClearance !== undefined) {
+    const clearanceValue = Number(snapWindowClearance);
 
     if (clearanceVariant === "tight") {
       values.snapWindowClearanceTight = clearanceValue;
@@ -267,6 +297,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+  buildPromotedValues,
   defaultStorageDir,
   promoteSnapshot,
 };
