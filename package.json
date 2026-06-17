@@ -1,0 +1,22 @@
+{
+  "name": "thermal-forgecad-modelling",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "check": "forgecad.cmd run box.forge.js",
+    "check:mount": "forgecad.cmd run thermal-gopro-realsense-mount.forge.js",
+    "check:realsense": "forgecad.cmd run realsense-mount-plate.forge.js",
+    "preview:realsense": "forgecad.cmd render 3d realsense-mount-plate.forge.js --output realsense-mount-plate-preview.png --chrome-path \"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\"",
+    "export:realsense:step": "forgecad.cmd export step realsense-mount-plate.forge.js --output realsense-mount-plate.step",
+    "preview:mount": "forgecad.cmd render 3d thermal-gopro-realsense-mount.forge.js --output thermal-gopro-realsense-mount-preview.png --chrome-path \"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\"",
+    "export:mount:step": "forgecad.cmd export step thermal-gopro-realsense-mount.forge.js --output thermal-gopro-realsense-mount.step",
+    "preview": "forgecad.cmd render 3d box.forge.js --output box-preview.png --chrome-path \"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\"",
+    "export:step": "forgecad.cmd export step box.forge.js --output box.step",
+    "studio": "forgecad.cmd studio .",
+    "save:snap:candidate": "node scripts/save_snap_profile.js --profile candidate",
+    "promote:snap:candidate": "node scripts/promote_snap_snapshot.js --profile candidate",
+    "watch:snap:candidate": "node scripts/watch_snap_snapshot.js --profile candidate",
+    "watch:snap:start": "node scripts/start_snap_snapshot_watcher.js",
+    "watch:snap:stop": "node scripts/stop_snap_snapshot_watcher.js"
+  }
+}

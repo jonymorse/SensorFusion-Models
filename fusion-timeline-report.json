@@ -1,0 +1,332 @@
+{
+  "document": "GoPro Clamp_Clamp Top v4",
+  "fusionVersion": "2702.1.58",
+  "timelineCount": 15,
+  "entries": [
+    {
+      "index": 0,
+      "timelineName": "Base Feature1",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::BaseFeature",
+      "entityName": "Base Feature1",
+      "details": {
+        "name": "Base Feature1",
+        "objectType": "adsk::fusion::BaseFeature",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "isSuppressed": "False",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "bodiesCount": 0,
+        "facesCount": 0
+      }
+    },
+    {
+      "index": 1,
+      "timelineName": "Sketch1",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::Sketch",
+      "entityName": "Sketch1",
+      "details": {
+        "name": "Sketch1",
+        "objectType": "adsk::fusion::Sketch",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "sketchCurves": {
+          "lines": 6,
+          "arcs": 2,
+          "circles": 3,
+          "ellipses": 0,
+          "fittedSplines": 0
+        },
+        "profiles": 4,
+        "profilesCount": 4
+      }
+    },
+    {
+      "index": 2,
+      "timelineName": "Extrude1",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::ExtrudeFeature",
+      "entityName": "Extrude1",
+      "details": {
+        "name": "Extrude1",
+        "objectType": "adsk::fusion::ExtrudeFeature",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "isSuppressed": "False",
+        "operation": "3",
+        "extentType": "0",
+        "isSolid": "True",
+        "taperAngle": "0.0 deg",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "bodiesCount": 1,
+        "facesCount": 5
+      }
+    },
+    {
+      "index": 3,
+      "timelineName": "Sketch2",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::Sketch",
+      "entityName": "Sketch2",
+      "details": {
+        "name": "Sketch2",
+        "objectType": "adsk::fusion::Sketch",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "sketchCurves": {
+          "lines": 6,
+          "arcs": 2,
+          "circles": 2,
+          "ellipses": 0,
+          "fittedSplines": 0
+        },
+        "profiles": 4,
+        "profilesCount": 4
+      }
+    },
+    {
+      "index": 4,
+      "timelineName": "Extrude2",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::ExtrudeFeature",
+      "entityName": "Extrude2",
+      "details": {
+        "name": "Extrude2",
+        "objectType": "adsk::fusion::ExtrudeFeature",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "isSuppressed": "False",
+        "operation": "3",
+        "extentType": "0",
+        "isSolid": "True",
+        "taperAngle": "0.0 deg",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "bodiesCount": 0,
+        "facesCount": 0
+      }
+    },
+    {
+      "index": 5,
+      "timelineName": "Sketch3",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::Sketch",
+      "entityName": "Sketch3",
+      "details": {
+        "name": "Sketch3",
+        "objectType": "adsk::fusion::Sketch",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "sketchCurves": {
+          "lines": 30,
+          "arcs": 0,
+          "circles": 2,
+          "ellipses": 0,
+          "fittedSplines": 0
+        },
+        "profiles": 8,
+        "profilesCount": 8
+      }
+    },
+    {
+      "index": 6,
+      "timelineName": "Extrude4",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::ExtrudeFeature",
+      "entityName": "Extrude4",
+      "details": {
+        "name": "Extrude4",
+        "objectType": "adsk::fusion::ExtrudeFeature",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "isSuppressed": "False",
+        "operation": "3",
+        "extentType": "0",
+        "isSolid": "True",
+        "taperAngle": "0.0 deg",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "bodiesCount": 0,
+        "facesCount": 0
+      }
+    },
+    {
+      "index": 7,
+      "timelineName": "Sketch6",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::Sketch",
+      "entityName": "Sketch6",
+      "details": {
+        "name": "Sketch6",
+        "objectType": "adsk::fusion::Sketch",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "sketchCurves": {
+          "lines": 9,
+          "arcs": 0,
+          "circles": 0,
+          "ellipses": 0,
+          "fittedSplines": 0
+        },
+        "profiles": 1,
+        "profilesCount": 1
+      }
+    },
+    {
+      "index": 8,
+      "timelineName": "Extrude9",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::ExtrudeFeature",
+      "entityName": "Extrude9",
+      "details": {
+        "name": "Extrude9",
+        "objectType": "adsk::fusion::ExtrudeFeature",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "isSuppressed": "False",
+        "operation": "1",
+        "extentType": "0",
+        "isSolid": "True",
+        "taperAngle": "0.0 deg",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "bodiesCount": 0,
+        "facesCount": 0
+      }
+    },
+    {
+      "index": 9,
+      "timelineName": "Extrude10",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::ExtrudeFeature",
+      "entityName": "Extrude10",
+      "details": {
+        "name": "Extrude10",
+        "objectType": "adsk::fusion::ExtrudeFeature",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "isSuppressed": "False",
+        "operation": "0",
+        "extentType": "0",
+        "isSolid": "True",
+        "taperAngle": "0.0 deg",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "bodiesCount": 1,
+        "facesCount": 11
+      }
+    },
+    {
+      "index": 10,
+      "timelineName": "Sketch7",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::Sketch",
+      "entityName": "Sketch7",
+      "details": {
+        "name": "Sketch7",
+        "objectType": "adsk::fusion::Sketch",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "sketchCurves": {
+          "lines": 21,
+          "arcs": 0,
+          "circles": 2,
+          "ellipses": 0,
+          "fittedSplines": 0
+        },
+        "profiles": 5,
+        "profilesCount": 5
+      }
+    },
+    {
+      "index": 11,
+      "timelineName": "Extrude11",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::ExtrudeFeature",
+      "entityName": "Extrude11",
+      "details": {
+        "name": "Extrude11",
+        "objectType": "adsk::fusion::ExtrudeFeature",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "isSuppressed": "False",
+        "operation": "0",
+        "extentType": "0",
+        "isSolid": "True",
+        "taperAngle": "0.0 deg",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "bodiesCount": 1,
+        "facesCount": 11
+      }
+    },
+    {
+      "index": 12,
+      "timelineName": "Sketch8",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::Sketch",
+      "entityName": "Sketch8",
+      "details": {
+        "name": "Sketch8",
+        "objectType": "adsk::fusion::Sketch",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "sketchCurves": {
+          "lines": 9,
+          "arcs": 0,
+          "circles": 0,
+          "ellipses": 0,
+          "fittedSplines": 0
+        },
+        "profiles": 17,
+        "profilesCount": 17
+      }
+    },
+    {
+      "index": 13,
+      "timelineName": "Extrude12",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::ExtrudeFeature",
+      "entityName": "Extrude12",
+      "details": {
+        "name": "Extrude12",
+        "objectType": "adsk::fusion::ExtrudeFeature",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "isSuppressed": "False",
+        "operation": "1",
+        "extentType": "0",
+        "isSolid": "True",
+        "taperAngle": "0.0 deg",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "bodiesCount": 1,
+        "facesCount": 5
+      }
+    },
+    {
+      "index": 14,
+      "timelineName": "Sketch9",
+      "timelineObjectType": "adsk::fusion::TimelineObject",
+      "entityType": "adsk::fusion::Sketch",
+      "entityName": "Sketch9",
+      "details": {
+        "name": "Sketch9",
+        "objectType": "adsk::fusion::Sketch",
+        "healthState": "0",
+        "errorOrWarningMessage": "",
+        "parentComponent": "<class 'adsk.fusion.Component'>",
+        "sketchCurves": {
+          "lines": 0,
+          "arcs": 0,
+          "circles": 0,
+          "ellipses": 0,
+          "fittedSplines": 0
+        },
+        "profiles": 0,
+        "profilesCount": 0
+      }
+    }
+  ]
+}
