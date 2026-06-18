@@ -5,6 +5,7 @@ const {
   parseArgs,
 } = require("./snap_profile_utils.js");
 const {
+  defaultCouponSnapshotFiles,
   defaultStorageDir,
   promoteSnapshot,
 } = require("./promote_snap_snapshot.js");
@@ -137,7 +138,7 @@ function runWatcher(options) {
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
-  const fileName = args.file || "snap_fit_test_coupon.forge.js";
+  const fileName = args.file || defaultCouponSnapshotFiles;
   const profile = args.profile || "candidate";
   const snapshotName = args.snapshot;
   const storageDir = args.storageDir || defaultStorageDir;

@@ -16,6 +16,10 @@ const defaultStorageDir = path.join(
   "Local Storage",
   "leveldb"
 );
+const defaultCouponSnapshotFiles = [
+  "models/snap_fit_test_coupon.forge.js",
+  "snap_fit_test_coupon.forge.js",
+];
 
 function listStorageFiles(storageDir) {
   return fs
@@ -98,39 +102,59 @@ function findViewPreferenceObjects(filePath) {
   return objects;
 }
 
+function normalizeFileNames(fileName) {
+  if (Array.isArray(fileName)) {
+    return fileName;
+  }
+
+  if (typeof fileName === "string" && fileName.trim().length > 0) {
+    return [fileName];
+  }
+
+  return defaultCouponSnapshotFiles;
+}
+
 function readSnapshotCache(storageDir, fileName) {
+  const fileNames = normalizeFileNames(fileName);
   const files = listStorageFiles(storageDir);
   let bestMatch = null;
   let bestTimestamp = -1;
+  let bestFileName = null;
 
   for (const filePath of files) {
     const objects = findViewPreferenceObjects(filePath);
 
     for (const object of objects) {
-      const snapshots = object.paramSnapshotsByFile?.[fileName];
+      for (const currentFileName of fileNames) {
+        const snapshots = object.paramSnapshotsByFile?.[currentFileName];
 
-      if (!Array.isArray(snapshots) || snapshots.length === 0) {
-        continue;
-      }
+        if (!Array.isArray(snapshots) || snapshots.length === 0) {
+          continue;
+        }
 
-      const latestTimestamp = Math.max(
-        ...snapshots.map((snapshot) => snapshot.createdAt || 0)
-      );
+        const latestTimestamp = Math.max(
+          ...snapshots.map((snapshot) => snapshot.createdAt || 0)
+        );
 
-      if (latestTimestamp > bestTimestamp) {
-        bestTimestamp = latestTimestamp;
-        bestMatch = snapshots;
+        if (latestTimestamp > bestTimestamp) {
+          bestTimestamp = latestTimestamp;
+          bestMatch = snapshots;
+          bestFileName = currentFileName;
+        }
       }
     }
   }
 
   if (!bestMatch) {
     throw new Error(
-      `No ForgeCAD snapshots found for ${fileName} in ${storageDir}`
+      `No ForgeCAD snapshots found for ${fileNames.join(", ")} in ${storageDir}`
     );
   }
 
-  return bestMatch;
+  return {
+    fileName: bestFileName,
+    snapshots: bestMatch,
+  };
 }
 
 function pickSnapshot(snapshots, snapshotName) {
@@ -221,7 +245,7 @@ function buildPromotedValues(baseValues, snapshot) {
 
 function promoteSnapshot(options = {}) {
   const {
-    fileName = "snap_fit_test_coupon.forge.js",
+    fileName = defaultCouponSnapshotFiles,
     profile = "candidate",
     snapshotName,
     storageDir = defaultStorageDir,
@@ -233,10 +257,12 @@ function promoteSnapshot(options = {}) {
     throw new Error(`Storage directory not found: ${storageDir}`);
   }
 
-  const snapshots = readSnapshotCache(storageDir, fileName);
+  const snapshotCache = readSnapshotCache(storageDir, fileName);
+  const snapshots = snapshotCache.snapshots;
 
   if (listOnly) {
     return {
+      fileName: snapshotCache.fileName,
       snapshots: snapshots
         .slice()
         .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
@@ -257,7 +283,7 @@ function promoteSnapshot(options = {}) {
   }
 
   return {
-    fileName,
+    fileName: snapshotCache.fileName,
     profile,
     snapshotName: snapshot.name,
     createdAt: snapshot.createdAt,
@@ -298,6 +324,7 @@ if (require.main === module) {
 
 module.exports = {
   buildPromotedValues,
+  defaultCouponSnapshotFiles,
   defaultStorageDir,
   promoteSnapshot,
 };
