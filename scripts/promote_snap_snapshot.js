@@ -17,7 +17,7 @@ const defaultStorageDir = path.join(
   "leveldb"
 );
 const defaultCouponSnapshotFiles = [
-  "models/snap_fit_test_coupon.forge.js",
+  "cad/tests/snap_fit_test_coupon.forge.js",
   "snap_fit_test_coupon.forge.js",
 ];
 

@@ -15,6 +15,9 @@ const d435HoleZ = Param.number("D435 Hole Z", 0, { min: -8, max: 8, unit: "mm" }
 const pt3TrayOffsetX = Param.number("PT3 Tray Offset X", 0, { min: -60, max: 60, unit: "mm" });
 const pt3TrayOffsetY = Param.number("PT3 Tray Offset Y", 0, { min: -80, max: 80, unit: "mm" });
 const pt3TrayOffsetZ = Param.number("PT3 Tray Offset Z", -42.5, { min: -60, max: 60, unit: "mm" });
+const pt3MountHoleDiameter = Param.number("PT3 Mount Hole Diameter", 3.2, { min: 1, max: 6, unit: "mm" });
+const pt3MountHoleSpacingZ = Param.number("PT3 Mount Hole Spacing Z", 8, { min: 4, max: 40, unit: "mm" });
+const pt3MountHoleInsetX = Param.number("PT3 Mount Hole Inset X", 2.9, { min: 0, max: 20, unit: "mm" });
 const hubPcbWidth = Param.number("Hub PCB Width", 51, { min: 20, max: 80, unit: "mm" });
 const hubPcbHeight = Param.number("Hub PCB Height", 51, { min: 20, max: 80, unit: "mm" });
 const hubPcbThickness = Param.number("Hub PCB Thickness", 1.6, { min: 0.8, max: 4, unit: "mm" });
@@ -31,7 +34,7 @@ const hubTopBossOffsetZ = Param.number("Hub Top Boss Offset Z", 0, { min: -40, m
 
 const showReferenceZones = Param.choice("Show Reference Zones", "yes", ["yes", "no"]);
 
-const pt3TrayRaw = Import.step("./purethermal_tray_only.step").rotateX(90).rotateY(90);
+const pt3TrayRaw = Import.step("../../hardware_refs/purethermal_tray_only.step").rotateX(90).rotateY(90);
 const pt3TrayBounds = pt3TrayRaw.boundingBox();
 const pt3TrayCenterX = (pt3TrayBounds.min[0] + pt3TrayBounds.max[0]) / 2;
 const pt3TrayBottomZ = pt3TrayBounds.min[2];
@@ -46,6 +49,10 @@ const pt3Tray = pt3TrayRaw
     pt3TrayOffsetZ - pt3TrayBottomZ
   )
   .color("#d95f02");
+const pt3TrayPlacedBounds = pt3Tray.boundingBox();
+const pt3MountHoleX = pt3TrayPlacedBounds.max[0] - pt3MountHoleInsetX;
+const pt3MountHoleCenterZ = (pt3TrayPlacedBounds.min[2] + pt3TrayPlacedBounds.max[2]) / 2;
+const pt3MountHoleRadius = pt3MountHoleDiameter / 2;
 
 const bodyBottomZ = -bodyHeight / 2;
 const targetSpineBottomZ = pt3TrayOffsetZ + spineBottomClearance;
@@ -67,6 +74,10 @@ const d435Hole = (x) =>
   cylinder(bodyDepth + 2, d435HoleDiameter / 2, d435HoleDiameter / 2, 32)
     .pointAlong([0, 1, 0])
     .translate(x, -(bodyDepth / 2) - 1, d435HoleZ);
+const pt3MountHole = (z) =>
+  cylinder(Math.max(bodyDepth, spineDepth) + 2, pt3MountHoleRadius, pt3MountHoleRadius, 24)
+    .pointAlong([0, 1, 0])
+    .translate(pt3MountHoleX, -Math.max(bodyDepth, spineDepth) / 2 - 1, z);
 
 const hubPcbFrontY = hubPcbOffsetY - hubPcbThickness / 2;
 const mountBackY = Math.max(bodyDepth, spineDepth) / 2;
@@ -95,6 +106,8 @@ const mainBody = difference(
   union(frontBody, spine),
   d435Hole(d435LeftX),
   d435Hole(d435RightX),
+  pt3MountHole(pt3MountHoleCenterZ - pt3MountHoleSpacingZ / 2),
+  pt3MountHole(pt3MountHoleCenterZ + pt3MountHoleSpacingZ / 2),
 );
 
 const hubBosses = union(

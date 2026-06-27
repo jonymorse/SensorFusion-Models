@@ -74,8 +74,8 @@ function replaceProfileBlock(source, profileName, nextBlock) {
 }
 
 function readProfiles() {
-  delete require.cache[require.resolve("../models/snap_fit_geometry.js")];
-  const geometry = require("../models/snap_fit_geometry.js");
+  delete require.cache[require.resolve("../cad/tests/snap_fit_geometry.js")];
+  const geometry = require("../cad/tests/snap_fit_geometry.js");
   return geometry.snapProfiles;
 }
 

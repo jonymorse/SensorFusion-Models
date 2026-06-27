@@ -1,6 +1,6 @@
 const view = Param.choice("View", "top", ["top", "front", "right"]);
 
-const pt3Raw = Import.step("./PT3.step");
+const pt3Raw = Import.step("../../hardware_refs/PT3.step");
 const bounds = pt3Raw.boundingBox();
 const centerX = (bounds.min[0] + bounds.max[0]) / 2;
 const centerY = (bounds.min[1] + bounds.max[1]) / 2;

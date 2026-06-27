@@ -60,7 +60,7 @@ const pegs = pegHeight > 0
 
 const faceplateWithPegs = union(faceplate, ...pegs).color("#6b6f74");
 
-const pt3Raw = Import.step("./PT3.step");
+const pt3Raw = Import.step("../../hardware_refs/PT3.step");
 const pt3Bounds = pt3Raw.boundingBox();
 const pt3CenterX = (pt3Bounds.min[0] + pt3Bounds.max[0]) / 2;
 const pt3CenterY = (pt3Bounds.min[1] + pt3Bounds.max[1]) / 2;

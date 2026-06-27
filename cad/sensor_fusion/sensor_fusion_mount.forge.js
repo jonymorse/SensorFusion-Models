@@ -214,7 +214,7 @@ mock(d435ReferenceBody, "Intel RealSense D435i Reference");
 
 // Reuse the complete PT3 tray as a separate, removable part. Its native XY
 // board plane maps to the chassis XZ plane and seats against the front face.
-const pt3TrayPart = require("../models/purethermal_tray_only.forge.js", {
+const pt3TrayPart = require("./purethermal_tray_only.forge.js", {
   "Mount Hole Spacing X": pt3TrayMountHoleSpacingX,
 });
 const pt3Tray = pt3TrayPart

@@ -2,7 +2,7 @@
 // Version 1: simplest heated target with a front hole plate, spacer frame,
 // and snap-fit back plate carrying a 6" x 8" reptile heating pad.
 
-const snapFitGeometry = require("./snap_fit_geometry.js");
+const snapFitGeometry = require("../../cad/tests/snap_fit_geometry.js");
 
 const plateSize = 220;
 const frontThickness = 3.5;
