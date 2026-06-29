@@ -58,6 +58,19 @@ const rootReinforcementHeight = 2;
 const displaySpacing = 38;
 const nutSeatThickness = 1.5;
 
+function hexPrism(depth, acrossFlats) {
+  const radius = acrossFlats / Math.sqrt(3);
+  const points = Array.from({ length: 6 }, (_, index) => {
+    const angle = Math.PI / 6 + index * Math.PI / 3;
+    return [
+      Math.cos(angle) * radius,
+      Math.sin(angle) * radius,
+    ];
+  });
+
+  return polygon(points).extrude(depth);
+}
+
 function buildProngs(fingerCount, color, addNutCapture = false) {
   const stackDepth = fingerCount * fingerThickness + (fingerCount - 1) * matingGap;
   const pivotZ = baseThickness + fingerHeight - fingerEndRadius;
@@ -112,12 +125,9 @@ function buildProngs(fingerCount, color, addNutCapture = false) {
         rootReinforcementHeight
       ).translate(supportCenterX, 0, baseThickness)
     );
-    const nutPocketRadius = nutPocketAcrossFlats / Math.sqrt(3);
-    const nutPocket = cylinder(
+    const nutPocket = hexPrism(
       nutPocketDepth + 0.6,
-      nutPocketRadius,
-      nutPocketRadius,
-      6
+      nutPocketAcrossFlats
     )
       .rotateY(90)
       .translate(stackDepth / 2 + nutSeatThickness, 0, pivotZ);
