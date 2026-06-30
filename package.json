@@ -19,6 +19,7 @@
     "export:realsense:step": "forgecad.cmd export step cad/sensor_fusion/realsense_mount_plate.forge.js --output outputs/exports/realsense_mount_plate.step",
     "export:sensor-fusion:step": "forgecad.cmd export step cad/sensor_fusion/sensor_fusion_mount.forge.js --output outputs/exports/sensor_fusion_mount.step",
     "export:realsense:rugged:step": "forgecad.cmd export step cad/concepts/realsense_mount_plate_rugged_concept.forge.js --output outputs/exports/realsense_mount_plate_rugged_concept.step",
+    "export:gopro-stand:step": "forgecad.cmd export step cad/sensor_fusion/gopro_camera_stand.forge.js --output outputs/exports/gopro_camera_stand.step",
     "studio": "forgecad.cmd studio .",
     "save:snap:candidate": "node scripts/save_snap_profile.js --profile candidate",
     "promote:snap:candidate": "node scripts/promote_snap_snapshot.js --profile candidate",

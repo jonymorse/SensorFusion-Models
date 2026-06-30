@@ -49,10 +49,10 @@ const prongBaseThickness = 4;
 const prongBaseWidth = 20;
 const bracketWidth = postWidth;
 const bracketThickness = 4;
-const bracketProngSideOverhang = Param.number("Bracket Prong-Side Overhang", 3, {
+const bracketProngSideOverhang = Param.number("Bracket Prong-Side Overhang", 0.5, {
   min: 0,
   max: 12,
-  step: 1,
+  step: 0.5,
   unit: "mm",
 });
 // The hex-nut capture extends only on one side of the female interface.
@@ -71,6 +71,18 @@ const bracketScrewClearanceDiameter = Param.number("Bracket Screw Clearance Diam
   step: 0.1,
   unit: "mm",
 });
+const bracketScrewHeadRecessDiameter = Param.number("Bracket Screw Head Recess Diameter", 6.4, {
+  min: 5.5,
+  max: 8,
+  step: 0.1,
+  unit: "mm",
+});
+const bracketScrewHeadRecessDepth = Param.number("Bracket Screw Head Recess Depth", 1.2, {
+  min: 0.5,
+  max: bracketThickness - 1,
+  step: 0.1,
+  unit: "mm",
+});
 const standInsertPilotDiameter = Param.number("Stand M3 Insert Pilot Diameter", 3.8, {
   min: 3.5,
   max: 4.2,
@@ -83,6 +95,11 @@ const standInsertPocketDepth = Param.number("Stand M3 Insert Pocket Depth", 5, {
   step: 0.1,
   unit: "mm",
 });
+const exportPart = Param.choice("Export Part", "assembly", [
+  "assembly",
+  "camera stand",
+  "removable gopro bracket",
+]);
 
 const importedProngs = require("./gopro_prongs.forge.js", {
   "Prong Set": "female",
@@ -153,6 +170,10 @@ const bracketScrewClearanceHoles = bracketScrewXs.map((x) =>
   cylinder(bracketThickness + 2, bracketScrewClearanceDiameter / 2)
     .translate(x, bracketScrewY, postTopZ - 1)
 );
+const bracketScrewHeadRecesses = bracketScrewXs.map((x) =>
+  cylinder(bracketScrewHeadRecessDepth + 1, bracketScrewHeadRecessDiameter / 2)
+    .translate(x, bracketScrewY, postTopZ + bracketThickness - bracketScrewHeadRecessDepth)
+);
 const standInsertPockets = bracketScrewXs.map((x) =>
   cylinder(standInsertPocketDepth + 0.2, standInsertPilotDiameter / 2)
     .translate(x, bracketScrewY, postTopZ - standInsertPocketDepth)
@@ -164,8 +185,17 @@ const standPart = difference(
 ).color("#527a67");
 const bracketPart = difference(
   bracketAssembly,
-  bracketScrewClearanceHoles
+  bracketScrewClearanceHoles,
+  bracketScrewHeadRecesses
 ).color("#477b9e");
+
+if (exportPart === "camera stand") {
+  return group({ name: "Camera Stand", shape: standPart });
+}
+
+if (exportPart === "removable gopro bracket") {
+  return group({ name: "Removable GoPro Bracket", shape: bracketPart });
+}
 
 return group(
   { name: "Camera Stand", shape: standPart },
