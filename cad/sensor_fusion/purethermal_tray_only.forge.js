@@ -9,7 +9,7 @@ const holeSpacingY = Param.number("Hole Spacing Y", 23.9, { min: 10, max: 40, un
 const trayWall = Param.number("Tray Wall", 2.5, { min: 1.5, max: 5, unit: "mm" });
 const floorThickness = Param.number("Floor Thickness", 1.2, { min: 0.8, max: 3, unit: "mm" });
 const trayHeight = Param.number("Tray Height", 5.2, { min: 3, max: 12, unit: "mm" });
-const containmentWallHeight = Param.number("Containment Wall Height", 10, { min: 0, max: 20, unit: "mm" });
+const containmentWallHeight = Param.number("Containment Wall Height", 3.0, { min: 0, max: 20, unit: "mm" });
 const containmentWallThickness = Param.number("Containment Wall Thickness", 1.8, { min: 0.8, max: 6, unit: "mm" });
 const supportRim = Param.number("Support Rim", 0.7, { min: 0.3, max: 3, unit: "mm" });
 const cavityCornerFillet = Param.number("Cavity Corner Fillet", 2, { min: 0, max: 8, unit: "mm" });
@@ -29,6 +29,8 @@ const usbCutoutCornerRadius = Param.number("USB Cutout Corner Radius", 1.4, { mi
 const wallExtensionDepth = Param.number("Wall Extension Depth", 4, { min: 0, max: 20, unit: "mm" });
 const mountHoleDiameter = Param.number("Mount Hole Diameter", 3.2, { min: 1, max: 6, unit: "mm" });
 const mountHoleSpacingX = Param.number("Mount Hole Spacing X", 8, { min: 4, max: 40, unit: "mm" });
+const mountScrewHeadDiameter = Param.number("Mount Screw Head Clearance", 6.0, { min: 5.0, max: 8.0, step: 0.1, unit: "mm" });
+const mountScrewHeadDepth = Param.number("Mount Screw Head Recess", 3.2, { min: 1.0, max: 5.0, step: 0.1, unit: "mm" });
 
 const bossRadius = standoffDiameter / 2;
 const tangentOuterWidth = holeSpacingX + standoffDiameter;
@@ -134,12 +136,17 @@ const mountHoleCenterY = wallExtensionDepth > 0
 const extensionMountHole = (x) =>
   cylinder(totalHeight + 1, mountHoleDiameter / 2, mountHoleDiameter / 2, 24)
     .translate(x, mountHoleCenterY, -0.5);
+const extensionMountCounterbore = (x) =>
+  cylinder(mountScrewHeadDepth + 0.02, mountScrewHeadDiameter / 2, mountScrewHeadDiameter / 2, 32)
+    .translate(x, mountHoleCenterY, totalHeight - mountScrewHeadDepth);
 
 tray = wallExtensionDepth > 0
   ? difference(
       tray,
       extensionMountHole(-mountHoleSpacingX / 2),
-      extensionMountHole(mountHoleSpacingX / 2)
+      extensionMountHole(mountHoleSpacingX / 2),
+      extensionMountCounterbore(-mountHoleSpacingX / 2),
+      extensionMountCounterbore(mountHoleSpacingX / 2)
     ).color("#6b6f74")
   : tray;
 

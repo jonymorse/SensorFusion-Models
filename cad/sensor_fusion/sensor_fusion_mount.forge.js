@@ -51,13 +51,19 @@ const pt3TrayMountHoleSpacingX = Param.number("PT3 Tray Mount Hole Spacing X", 8
   step: 0.5,
   unit: "mm",
 });
-const pt3TrayMountOffsetX = Param.number("PT3 Tray Mount Offset X", 17.45, {
+const pt3TrayMountOffsetX = Param.number("PT3 Tray Mount Offset X", 15.45, {
   min: 10,
   max: 30,
   step: 0.05,
   unit: "mm",
 });
-const pt3InsertPilotDiameter = Param.number("PT3 M3 Insert Pilot Diameter", 3.8, {
+const pt3WallExtensionDepth = Param.number("PT3 Wall Extension Depth", 6, {
+  min: 0,
+  max: 20,
+  step: 0.5,
+  unit: "mm",
+});
+const pt3InsertPilotDiameter = Param.number("PT3 M3 Insert Pilot Diameter", 4.0, {
   min: 3.5,
   max: 4.2,
   step: 0.1,
@@ -69,9 +75,15 @@ const pt3InsertPocketDepth = Param.number("PT3 M3 Insert Pocket Depth", 3.2, {
   step: 0.1,
   unit: "mm",
 });
-const hubBossDiameter = Param.number("ORICO Hub Boss Diameter", 7, {
+const frontMembraneThickness = Param.number("Front Sacrificial Membrane Thickness", 0.2, {
+  min: 0,
+  max: 0.6,
+  step: 0.05,
+  unit: "mm",
+});
+const hubBossDiameter = Param.number("ORICO Hub Boss Diameter", 9, {
   min: 6,
-  max: 10,
+  max: 12,
   step: 0.5,
   unit: "mm",
 });
@@ -81,15 +93,15 @@ const hubStandoff = Param.number("ORICO Hub Standoff", 5, {
   step: 0.5,
   unit: "mm",
 });
-const hubInsertPilotDiameter = Param.number("ORICO M2.5 Insert Pilot Diameter", 3.1, {
-  min: 2.9,
-  max: 3.5,
+const hubInsertPilotDiameter = Param.number("ORICO M3 Insert Pilot Diameter", 4.0, {
+  min: 3.8,
+  max: 4.4,
   step: 0.1,
   unit: "mm",
 });
-const hubInsertPocketDepth = Param.number("ORICO M2.5 Insert Pocket Depth", 2.7, {
-  min: 2,
-  max: 4.5,
+const hubInsertPocketDepth = Param.number("ORICO M3 Insert Pocket Depth", 3.2, {
+  min: 2.8,
+  max: 4.0,
   step: 0.1,
   unit: "mm",
 });
@@ -97,6 +109,24 @@ const hubVerticalOffset = Param.number("ORICO Vertical Offset", 3, {
   min: 0,
   max: 6,
   step: 0.5,
+  unit: "mm",
+});
+const hubLocatorClearance = Param.number("ORICO PCB Locator Clearance", 0.4, {
+  min: 0.1,
+  max: 1.5,
+  step: 0.1,
+  unit: "mm",
+});
+const hubLocatorTabLength = Param.number("ORICO PCB Locator Tab Length", 6, {
+  min: 3,
+  max: 12,
+  step: 0.5,
+  unit: "mm",
+});
+const hubLocatorTabThickness = Param.number("ORICO PCB Locator Tab Thickness", 1.2, {
+  min: 0.8,
+  max: 3,
+  step: 0.1,
   unit: "mm",
 });
 const showClearanceDimensions = Param.choice(
@@ -107,6 +137,7 @@ const showClearanceDimensions = Param.choice(
 const outputPart = Param.choice("Output Part", "assembly", [
   "assembly",
   "sensor chassis",
+  "sensor chassis with membrane",
   "pt3 tray",
   "gopro adapter",
 ]);
@@ -193,6 +224,28 @@ const plate = difference(
   pt3InsertPocket(pt3CenterZ + pt3TrayMountHoleSpacingX / 2)
 );
 
+function frontHoleMembrane(x, z, diameter) {
+  const thickness = Math.min(frontMembraneThickness, plateThickness - 0.5);
+  return cylinder(thickness, diameter / 2, undefined, 32)
+    .pointAlong([0, 1, 0])
+    .translate(x, -plateThickness / 2, z);
+}
+
+const frontSacrificialMembranes = union(
+  frontHoleMembrane(-d435HoleSpacing / 2, d435HoleZ, d435HoleDiameter),
+  frontHoleMembrane(d435HoleSpacing / 2, d435HoleZ, d435HoleDiameter),
+  frontHoleMembrane(
+    pt3TrayMountOffsetX,
+    pt3CenterZ - pt3TrayMountHoleSpacingX / 2,
+    pt3InsertPilotDiameter
+  ),
+  frontHoleMembrane(
+    pt3TrayMountOffsetX,
+    pt3CenterZ + pt3TrayMountHoleSpacingX / 2,
+    pt3InsertPilotDiameter
+  )
+).color("#8fb7c9");
+
 // D435i reference envelope (90 x 25 x 25 mm), centered on its mounting
 // hole line and seated against the front of the chassis. As a mock it is
 // visible for layout/fit checks but is not included in exports.
@@ -210,17 +263,20 @@ const d435ReferenceBody = fillet(
     d435HoleZ - d435ReferenceHeight / 2
   )
   .color("#3b82b8");
-mock(d435ReferenceBody, "Intel RealSense D435i Reference");
+if (outputPart === "assembly") {
+  mock(d435ReferenceBody, "Intel RealSense D435i Reference");
+}
 
 // Reuse the complete PT3 tray as a separate, removable part. Its native XY
 // board plane maps to the chassis XZ plane and seats against the front face.
 const pt3TrayPart = require("./purethermal_tray_only.forge.js", {
   "Mount Hole Spacing X": pt3TrayMountHoleSpacingX,
+  "Wall Extension Depth": pt3WallExtensionDepth,
 });
 const pt3Tray = pt3TrayPart
   .rotateX(90)
   .rotateY(90)
-  .translate(0, -plateThickness / 2, pt3CenterZ);
+  .translate(-pt3WallExtensionDepth / 2, -plateThickness / 2, pt3CenterZ);
 const hubBosses = fourBossPattern(
   hubOffsetX,
   hubCenterZ,
@@ -238,7 +294,7 @@ const hubBosses = fourBossPattern(
 const hubPcbWidth = 51;
 const hubPcbHeight = 51;
 const hubPcbThickness = 1.6;
-const hubPcbHoleDiameter = 2.5;
+const hubPcbHoleDiameter = 3.4;
 const hubPcbCornerRadius = 3;
 const hubPcbBackY = plateThickness / 2 + hubStandoff;
 const hubPcbBlank = fillet(
@@ -268,7 +324,70 @@ const hubPcbReference = difference(
     hubCenterZ - hubPcbHeight / 2
   )
   .color("#2d8a67");
-mock(hubPcbReference, "ORICO USB-C Hub PCB Reference");
+if (outputPart === "assembly") {
+  mock(hubPcbReference, "ORICO USB-C Hub PCB Reference");
+}
+
+const hubLocatorDepth = hubStandoff + hubPcbThickness + 0.6;
+const hubLocatorStartY = plateThickness / 2 + hubLocatorDepth - bodyOverlap / 2;
+const hubLocatorCornerOffsetX = hubPcbWidth / 2 - hubPcbCornerRadius;
+const hubLocatorCornerOffsetZ = hubPcbHeight / 2 - hubPcbCornerRadius;
+const hubLocatorInnerRadius = hubPcbCornerRadius + hubLocatorClearance;
+const hubLocatorOuterRadius = hubLocatorInnerRadius + hubLocatorTabThickness;
+const hubLocatorSegments = Math.max(10, Math.round(hubLocatorTabLength * 2));
+
+function arcPointsXZ(cx, cz, radius, startAngle, endAngle, segments) {
+  const points = [];
+  for (let i = 0; i <= segments; i += 1) {
+    const t = i / segments;
+    const angle = startAngle + (endAngle - startAngle) * t;
+    points.push([
+      cx + Math.cos(angle) * radius,
+      cz + Math.sin(angle) * radius,
+    ]);
+  }
+  return points;
+}
+
+function xzProfileToRearPrism(points, depth) {
+  return polygon(points)
+    .extrude(depth)
+    .rotateX(90)
+    .translate(0, hubLocatorStartY, 0);
+}
+
+function hubCornerLocator(cx, cz, startAngle, endAngle) {
+  const outerArc = arcPointsXZ(cx, cz, hubLocatorOuterRadius, startAngle, endAngle, hubLocatorSegments);
+  const innerArc = arcPointsXZ(cx, cz, hubLocatorInnerRadius, endAngle, startAngle, hubLocatorSegments);
+  return xzProfileToRearPrism([...outerArc, ...innerArc], hubLocatorDepth);
+}
+
+const hubPcbLocators = union(
+  hubCornerLocator(
+    hubOffsetX + hubLocatorCornerOffsetX,
+    hubCenterZ + hubLocatorCornerOffsetZ,
+    0,
+    Math.PI / 2
+  ),
+  hubCornerLocator(
+    hubOffsetX - hubLocatorCornerOffsetX,
+    hubCenterZ + hubLocatorCornerOffsetZ,
+    Math.PI / 2,
+    Math.PI
+  ),
+  hubCornerLocator(
+    hubOffsetX - hubLocatorCornerOffsetX,
+    hubCenterZ - hubLocatorCornerOffsetZ,
+    Math.PI,
+    Math.PI * 1.5
+  ),
+  hubCornerLocator(
+    hubOffsetX + hubLocatorCornerOffsetX,
+    hubCenterZ - hubLocatorCornerOffsetZ,
+    Math.PI * 1.5,
+    Math.PI * 2
+  )
+);
 
 if (showClearanceDimensions === "yes") {
   const dimensionY = plateThickness / 2 + hubStandoff + 2;
@@ -345,7 +464,7 @@ const maleProng = importedProngs
   ]);
 
 const chassis = difference(
-  union(plate, hubBosses),
+  union(plate, hubBosses, hubPcbLocators),
   insertPocket(-adapterScrewSpacing / 2),
   insertPocket(adapterScrewSpacing / 2),
   receiverKeyRecess
@@ -378,6 +497,13 @@ if (outputPart === "sensor chassis") {
   return group({ name: "Sensor Fusion Chassis", shape: chassis });
 }
 
+if (outputPart === "sensor chassis with membrane") {
+  return group(
+    { name: "Sensor Fusion Chassis", shape: chassis },
+    { name: "Front Sacrificial Membranes", shape: frontSacrificialMembranes }
+  );
+}
+
 if (outputPart === "pt3 tray") {
   return group({ name: "PureThermal 3 Tray", shape: pt3TrayPart });
 }
@@ -389,6 +515,7 @@ if (outputPart === "gopro adapter") {
 
 return group(
   { name: "Sensor Fusion Chassis", shape: chassis },
+  { name: "Front Sacrificial Membranes", shape: frontSacrificialMembranes },
   { name: "PureThermal 3 Tray", shape: pt3Tray },
   { name: "Detachable GoPro Adapter", shape: goproAdapter }
 );

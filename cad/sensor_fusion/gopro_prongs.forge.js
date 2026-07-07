@@ -2,6 +2,10 @@
 // De facto dimensions based on measured mounts; not an official GoPro drawing.
 
 const prongSet = Param.choice("Prong Set", "both", ["both", "male", "female"]);
+const mountStyle = Param.choice("Mount Style", "standalone", [
+  "standalone",
+  "flush mount",
+]);
 const fingerThickness = Param.number("Finger Thickness", 3.0, {
   min: 2.8,
   max: 3.2,
@@ -145,7 +149,11 @@ function buildProngs(fingerCount, color, addNutCapture = false) {
     );
   }
 
-  return shape.color(color);
+  const mountedShape = mountStyle === "flush mount"
+    ? shape.translate(0, 0, -baseThickness)
+    : shape;
+
+  return mountedShape.color(color);
 }
 
 const maleProngs = buildProngs(2, "#d97745");
