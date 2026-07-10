@@ -47,8 +47,18 @@ const baseCornerRadius = Math.min(10, standBaseWidth / 5, standBaseDepth / 5);
 const prongBaseThickness = 4;
 const prongBaseWidth = 20;
 const prongFingerHeight = 17;
-const bracketWidth = postWidth;
-const bracketThickness = 4;
+const bracketWidth = Param.number("Bracket Width", 34, {
+  min: 28,
+  max: 50,
+  step: 0.5,
+  unit: "mm",
+});
+const bracketThickness = Param.number("Bracket Plate Thickness", 6, {
+  min: 4,
+  max: 9,
+  step: 0.5,
+  unit: "mm",
+});
 const bracketProngSideOverhang = Param.number("Bracket Prong-Side Overhang", 0.5, {
   min: 0,
   max: 12,

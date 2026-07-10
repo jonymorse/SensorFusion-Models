@@ -58,7 +58,6 @@ const nutPocketDepth = Param.number("M5 Nut Pocket Depth", 5.0, {
 
 const fingerEndDiameter = 15;
 const fingerEndRadius = fingerEndDiameter / 2;
-const rootReinforcementHeight = 2;
 const displaySpacing = 38;
 const nutSeatThickness = 1.5;
 
@@ -80,7 +79,6 @@ function buildProngs(fingerCount, color, addNutCapture = false) {
   const pivotZ = baseThickness + fingerHeight - fingerEndRadius;
   const base = box(stackDepth, baseWidth, baseThickness);
   const fingers = [];
-  const roots = [];
 
   for (let index = 0; index < fingerCount; index += 1) {
     const x = -stackDepth / 2
@@ -91,24 +89,15 @@ function buildProngs(fingerCount, color, addNutCapture = false) {
     const roundedEnd = cylinder(fingerThickness, fingerEndRadius)
       .rotateY(90)
       .translate(x - fingerThickness / 2, 0, pivotZ);
-    const reinforcedRoot = box(
-      fingerThickness,
-      Math.max(fingerEndDiameter, baseWidth - 1),
-      rootReinforcementHeight
-    ).translate(x, 0, baseThickness);
 
     fingers.push(union(stem, roundedEnd));
-    roots.push(reinforcedRoot);
   }
 
   const pivotHole = cylinder(stackDepth + 2, pivotHoleDiameter / 2)
     .rotateY(90)
     .translate(-stackDepth / 2 - 1, 0, pivotZ);
 
-  let shape = difference(
-    union(base, [...fingers, ...roots]),
-    pivotHole
-  );
+  let shape = difference(union(base, fingers), pivotHole);
 
   if (addNutCapture) {
     const supportOverlap = 0.3;
@@ -123,11 +112,6 @@ function buildProngs(fingerCount, color, addNutCapture = false) {
       cylinder(supportLength, fingerEndRadius)
         .rotateY(90)
         .translate(supportStartX, 0, pivotZ),
-      box(
-        supportLength,
-        Math.max(fingerEndDiameter, baseWidth - 1),
-        rootReinforcementHeight
-      ).translate(supportCenterX, 0, baseThickness)
     );
     const nutPocket = hexPrism(
       nutPocketDepth + 0.6,
