@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Headmount Assembly Viewer</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <a class="owner" href="https://jonymorse.com">Jonathan Morse</a>
+        <nav aria-label="Primary navigation">
+          <a href="https://github.com/jonymorse/SensorFusion-Models">Source</a>
+          <a href="mailto:jemorse55@gmail.com">Contact</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="model-stage" aria-live="polite">
+          <div id="three-view" aria-label="Interactive 3D view of the MQ3S mount base"></div>
+          <span class="loading" id="loading">Loading 3D geometry…</span>
+        </section>
+
+        <aside class="model-description">
+          <p class="eyebrow">Hardware / Prototype</p>
+          <h2>Meta Quest 3S mount</h2>
+          <p>A custom headset mount with a GoPro-compatible attachment underneath for securing a camera or sensor.</p>
+          <p class="interaction">Drag to rotate · Scroll to zoom</p>
+        </aside>
+      </main>
+    </div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three/three.module.js",
+          "three/addons/": "./vendor/three/addons/"
+        }
+      }
+    </script>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>
