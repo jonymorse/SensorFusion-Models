@@ -85,17 +85,16 @@ header nav a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 4px;
 }
-.eyebrow { margin: 0 0 6px; color: var(--accent); font-size: 11px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
 main { width: min(1180px, 100%); margin: 0 auto; padding-top: clamp(22px, 4vw, 52px); display: grid; grid-template-columns: minmax(0, 1fr) clamp(300px, 26vw, 340px); gap: clamp(48px, 5vw, 72px); align-items: center; }
 .model-stage { position: relative; min-width: 0; min-height: clamp(420px, 70vh, 760px); overflow: hidden; }
 #three-view { position: absolute; inset: 0; cursor: grab; }
 #three-view:active { cursor: grabbing; }
 #three-view canvas { width: 100%; height: 100%; display: block; }
 .loading { position: absolute; left: 0; bottom: 12px; color: var(--muted); font: 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
-.model-description { position: relative; z-index: 2; width: 100%; padding: 28px 0; border-top: 1px solid var(--line); background: var(--bg); }
-.model-description h2 { margin: 15px 0 0; font-size: clamp(28px, 3vw, 42px); line-height: 1; letter-spacing: -.045em; font-weight: 590; }
-.model-description > p:not(.eyebrow) { margin: clamp(16px, 2vw, 22px) 0 0; color: var(--muted); font-size: clamp(14px, 1.35vw, 16px); line-height: 1.55; }
-.model-description p.interaction { margin-top: 30px; color: var(--muted); font: 500 10px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .04em; text-transform: uppercase; }
+.model-description { position: relative; z-index: 2; width: 100%; padding: 24px 0; background: var(--bg); }
+.model-description h1 { margin: 0; font-size: clamp(34px, 3vw, 44px); line-height: 1.02; letter-spacing: -.045em; font-weight: 590; }
+.model-description > p { margin: clamp(16px, 2vw, 22px) 0 0; color: var(--muted); font-size: clamp(14px, 1.35vw, 16px); line-height: 1.55; }
+.model-description p.interaction { margin-top: 28px; color: var(--quiet); font-size: 12px; line-height: 1.4; }
 @media (max-width: 720px) {
   header { height: 64px; }
   header.is-compact { height: 56px; }
