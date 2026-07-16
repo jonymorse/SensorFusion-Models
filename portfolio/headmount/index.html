@@ -4,6 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Headmount Assembly Viewer</title>
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme === 'light' || savedTheme === 'dark'
+          ? savedTheme
+          : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
@@ -13,6 +23,9 @@
         <nav aria-label="Primary navigation">
           <a href="https://github.com/jonymorse/SensorFusion-Models">Source</a>
           <a href="mailto:jemorse55@gmail.com">Contact</a>
+          <button class="theme-toggle" type="button" aria-label="Switch color theme" title="Switch color theme">
+            <span aria-hidden="true"></span>
+          </button>
         </nav>
       </header>
 

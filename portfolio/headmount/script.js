@@ -4,6 +4,32 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 
 const viewport = document.querySelector('#three-view');
 const loading = document.querySelector('#loading');
+const header = document.querySelector('header');
+const themeToggle = document.querySelector('.theme-toggle');
+
+function updateThemeLabel() {
+  const currentTheme = document.documentElement.dataset.theme;
+  const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  const label = `Switch to ${nextTheme} mode`;
+  themeToggle.setAttribute('aria-label', label);
+  themeToggle.setAttribute('title', label);
+}
+
+themeToggle.addEventListener('click', () => {
+  const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = nextTheme;
+  document.documentElement.style.colorScheme = nextTheme;
+  localStorage.setItem('theme', nextTheme);
+  updateThemeLabel();
+});
+
+function updateHeader() {
+  header.classList.toggle('is-compact', window.scrollY > 24);
+}
+
+updateThemeLabel();
+updateHeader();
+window.addEventListener('scroll', updateHeader, { passive: true });
 
 const scene = new THREE.Scene();
 
