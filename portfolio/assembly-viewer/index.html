@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Interactive exploded view of the Quest 3S sensor-fusion assembly."
+    />
+    <title>Quest 3S Sensor Fusion Assembly</title>
+    <script type="module" crossorigin src="./assets/index-DGlSsaFP.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-C6D1Cpa4.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <canvas id="assembly-canvas" aria-label="Interactive 3D assembly viewer"></canvas>
+
+      <header class="masthead">
+        <div class="wordmark">
+          <span class="wordmark-dot"></span>
+          THERMAL / SENSOR FUSION
+        </div>
+        <div class="view-actions" aria-label="Camera views">
+          <button type="button" data-view="front">Front</button>
+          <button type="button" data-view="side">Side</button>
+          <button type="button" data-view="iso" class="active">ISO</button>
+          <button type="button" id="reset-view">Reset</button>
+        </div>
+      </header>
+
+      <aside class="parts-panel">
+        <div class="parts-heading">
+          <div>
+            <p class="eyebrow">COMPONENT INDEX</p>
+            <h2>9 parts</h2>
+          </div>
+          <button type="button" id="toggle-parts" aria-label="Collapse component list">−</button>
+        </div>
+        <div id="parts-list" class="parts-list"></div>
+      </aside>
+
+      <section class="explode-panel">
+        <div class="explode-copy">
+          <p class="eyebrow">EXPLODED VIEW</p>
+          <strong id="explode-readout">ASSEMBLED</strong>
+        </div>
+        <input
+          id="explode-slider"
+          type="range"
+          min="0"
+          max="100"
+          value="0"
+          aria-label="Exploded view amount"
+        />
+        <button type="button" id="explode-toggle">Explode</button>
+      </section>
+
+      <div class="status-card" id="status-card" role="status">
+        <span class="status-pulse"></span>
+        <span id="status-text">Loading assembly…</span>
+      </div>
+
+      <div class="selection-card" id="selection-card" hidden>
+        <p class="eyebrow">SELECTED COMPONENT</p>
+        <strong id="selection-name"></strong>
+        <button type="button" id="clear-selection">Clear</button>
+      </div>
+    </main>
+  </body>
+</html>
