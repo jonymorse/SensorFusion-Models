@@ -8,8 +8,8 @@
       content="Interactive exploded view of the Quest 3S sensor-fusion assembly."
     />
     <title>Quest 3S Sensor Fusion Assembly</title>
-    <script type="module" crossorigin src="./assets/index-81V0MvoZ.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-C6D1Cpa4.css">
+    <script type="module" crossorigin src="./assets/index-DSr8nnWw.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-3S_bT0cB.css">
   </head>
   <body>
     <main class="app-shell">
@@ -34,7 +34,12 @@
             <p class="eyebrow">COMPONENT INDEX</p>
             <h2>9 parts</h2>
           </div>
-          <button type="button" id="toggle-parts" aria-label="Collapse component list">−</button>
+          <button
+            type="button"
+            id="toggle-parts"
+            aria-label="Close component index"
+            aria-expanded="true"
+          >−</button>
         </div>
         <div id="parts-list" class="parts-list"></div>
       </aside>
@@ -54,11 +59,6 @@
         />
         <button type="button" id="explode-toggle">Explode</button>
       </section>
-
-      <div class="status-card" id="status-card" role="status">
-        <span class="status-pulse"></span>
-        <span id="status-text">Loading assembly…</span>
-      </div>
 
       <div class="selection-card" id="selection-card" hidden>
         <p class="eyebrow">SELECTED COMPONENT</p>
