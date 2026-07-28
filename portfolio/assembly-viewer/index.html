@@ -3,13 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      if (window.location.pathname.endsWith("/dossier")) {
+        window.location.replace(`${window.location.pathname}/${window.location.search}${window.location.hash}`);
+      }
+    </script>
     <meta
       name="description"
       content="Interactive exploded view of the Quest 3S sensor-fusion assembly."
     />
     <title>Quest 3S Sensor Fusion Assembly</title>
-    <script type="module" crossorigin src="./assets/index-CctqGDs8.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-C45wCWOk.css">
+    <script type="module" crossorigin src="./assets/viewer-B8XBbwhQ.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/OrbitControls-qb7j3oR3.js">
+    <link rel="stylesheet" crossorigin href="./assets/viewer-BxEF9m8C.css">
   </head>
   <body>
     <main class="app-shell">
@@ -18,12 +24,12 @@
       <header class="masthead">
         <div class="wordmark">
           <span class="wordmark-dot"></span>
-          THERMAL / SENSOR FUSION
+          <span class="wordmark-label">HW-01 / SENSOR FUSION ASSEMBLY</span>
         </div>
         <div class="view-actions" aria-label="Camera views">
-          <button type="button" data-view="front">Front</button>
+          <button type="button" data-view="front" class="active">Front</button>
           <button type="button" data-view="side">Side</button>
-          <button type="button" data-view="iso" class="active">ISO</button>
+          <button type="button" data-view="iso">ISO</button>
           <button type="button" id="reset-view">Reset</button>
         </div>
       </header>
@@ -59,13 +65,14 @@
           aria-label="Exploded view amount"
         />
         <button type="button" id="explode-toggle">Explode</button>
+        <a class="viewer-link" href="./" target="_blank" rel="noreferrer">Full viewer ↗</a>
       </section>
       </div>
 
       <div class="selection-card" id="selection-card" hidden>
-        <p class="eyebrow">SELECTED COMPONENT</p>
+        <p class="eyebrow">SEL</p>
         <strong id="selection-name"></strong>
-        <button type="button" id="clear-selection">Clear</button>
+        <button type="button" id="clear-selection" aria-label="Clear selected component">×</button>
       </div>
     </main>
   </body>
