@@ -1099,14 +1099,23 @@
     .software-repo {
       color: var(--quiet);
       font-family: var(--mono);
-      font-size: 8px;
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: .1em;
-      transition: color 160ms ease;
+      padding: 10px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(var(--text-rgb), .025);
+      transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
     }
 
     .software-repo:hover,
-    .software-repo:focus-visible { color: var(--text); outline: none; }
+    .software-repo:focus-visible {
+      color: var(--text);
+      border-color: var(--line-strong);
+      background: rgba(var(--text-rgb), .06);
+      outline: none;
+    }
 
     .software-tabs {
       display: flex;
@@ -1502,8 +1511,8 @@
       height: 100%;
       min-height: 0;
       display: grid;
-      grid-template-columns: minmax(180px, .48fr) minmax(340px, 1fr) minmax(300px, .82fr);
-      grid-template-rows: minmax(0, 1fr) auto;
+      grid-template-columns: minmax(370px, .72fr) minmax(520px, 1.28fr);
+      grid-template-rows: auto minmax(0, 1fr);
       gap: 10px;
     }
 
@@ -1516,38 +1525,39 @@
     }
 
     .bridge-source-bank {
-      padding: 13px;
+      grid-column: 1 / -1;
+      padding: 10px;
       display: grid;
-      grid-template-rows: auto repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px;
     }
 
     .bridge-story-heading {
       display: grid;
-      gap: 4px;
-      padding-bottom: 3px;
+      align-content: center;
+      padding: 0 8px 0 3px;
     }
 
     .bridge-story-heading strong {
-      font-size: 13px;
+      font-size: 15px;
       letter-spacing: -.02em;
     }
 
     .bridge-story-heading small {
       color: var(--quiet);
-      font-size: 8px;
+      font-size: 9px;
       line-height: 1.4;
     }
 
     .bridge-source {
       position: relative;
       width: 100%;
-      padding: 10px;
+      min-height: 72px;
+      padding: 10px 11px;
       border: 1px solid var(--line);
       border-radius: 13px;
       display: grid;
-      align-content: space-between;
-      gap: 8px;
+      align-items: center;
       color: var(--muted);
       background: rgba(var(--text-rgb), .018);
       font: inherit;
@@ -1557,13 +1567,7 @@
     }
 
     .bridge-source::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: -14px;
-      width: 14px;
-      border-top: 1px solid transparent;
-      transition: border-color 160ms ease;
+      display: none;
     }
 
     .bridge-source:hover,
@@ -1591,25 +1595,31 @@
 
     .bridge-source span {
       color: var(--quiet);
-      font-size: 7px;
+      font-size: 9px;
+    }
+
+    .bridge-source-copy {
+      min-width: 0;
+      display: grid;
+      gap: 4px;
     }
 
     .bridge-source strong {
       display: block;
-      font-size: 13px;
+      font-size: 15px;
       letter-spacing: -.025em;
     }
 
     .bridge-source small {
       color: var(--quiet);
-      font-size: 6px;
+      font-size: 8px;
     }
 
     .bridge-core {
       position: relative;
       padding: 15px;
       display: grid;
-      grid-template-rows: auto minmax(0, 1fr) auto;
+      grid-template-rows: auto minmax(0, 1fr);
       gap: 12px;
       background:
         radial-gradient(circle at 50% 48%, rgba(var(--accent-rgb), .11), transparent 32%),
@@ -1634,9 +1644,17 @@
     .bridge-core-header h3 {
       margin: 4px 0 0;
       max-width: 15ch;
-      font-size: clamp(24px, 2.7vw, 42px);
+      font-size: clamp(28px, 3vw, 44px);
       line-height: .96;
       letter-spacing: -.05em;
+    }
+
+    .bridge-core-note {
+      margin: 8px 0 0;
+      max-width: 54ch;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.48;
     }
 
     .bridge-core-state {
@@ -1661,49 +1679,53 @@
 
     .bridge-signal-line {
       position: absolute;
-      right: 6%;
-      left: 6%;
-      top: 50%;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(var(--accent-rgb), .2), var(--accent), rgba(var(--accent-rgb), .2));
+      z-index: 2;
+      top: 8%;
+      bottom: 8%;
+      left: 0;
+      width: 1px;
+      background: linear-gradient(180deg, rgba(var(--accent-rgb), .18), var(--accent), rgba(var(--accent-rgb), .18));
     }
 
     .bridge-signal-line::after {
       content: "";
       position: absolute;
-      top: -3px;
-      left: 0;
+      top: 0;
+      left: -3px;
       width: 7px;
       height: 7px;
       border-radius: 50%;
       background: var(--accent);
       box-shadow: 0 0 0 5px var(--accent-soft), 0 0 18px var(--accent);
-      animation: bridgeSignal 2.7s cubic-bezier(.42,0,.58,1) infinite;
+      animation: bridgeSignalVertical 2.7s cubic-bezier(.42,0,.58,1) infinite;
     }
 
-    @keyframes bridgeSignal {
-      0% { left: 0; opacity: 0; }
+    @keyframes bridgeSignalVertical {
+      0% { top: 0; opacity: 0; }
       10% { opacity: 1; }
       90% { opacity: 1; }
-      100% { left: calc(100% - 7px); opacity: 0; }
+      100% { top: calc(100% - 7px); opacity: 0; }
     }
 
     .bridge-signal-stages {
       position: relative;
+      height: 100%;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-rows: repeat(4, minmax(0, 1fr));
       gap: 7px;
     }
 
     .bridge-signal-stage {
       min-width: 0;
-      min-height: 92px;
-      padding: 9px;
+      min-height: 0;
+      padding: 11px 11px 11px 24px;
       border: 1px solid var(--line);
       border-radius: 12px;
       display: grid;
-      align-content: space-between;
-      gap: 8px;
+      grid-template-columns: 82px minmax(0, 1fr);
+      align-items: center;
+      align-content: center;
+      gap: 14px;
       background: color-mix(in srgb, var(--viewport) 86%, transparent);
       backdrop-filter: blur(10px);
     }
@@ -1711,17 +1733,17 @@
     .bridge-signal-stage span {
       color: var(--accent);
       font-family: var(--mono);
-      font-size: 7px;
+      font-size: 9px;
     }
 
     .bridge-signal-stage strong {
-      font-size: 11px;
+      font-size: 14px;
       letter-spacing: -.02em;
     }
 
     .bridge-signal-stage small {
       color: var(--quiet);
-      font-size: 7px;
+      font-size: 8px;
       line-height: 1.35;
     }
 
@@ -1744,12 +1766,13 @@
 
     .bridge-core-route strong {
       color: var(--muted);
-      font-size: 9px;
+      font-size: 10px;
       text-align: right;
     }
 
     .bridge-output {
       position: relative;
+      margin: 0;
       background: #060807;
     }
 
@@ -1757,7 +1780,8 @@
       width: 100%;
       height: 100%;
       display: block;
-      object-fit: contain;
+      object-fit: cover;
+      object-position: center;
     }
 
     .bridge-output::after {
@@ -1785,19 +1809,19 @@
 
     .bridge-output-copy strong {
       color: rgba(255,255,255,.92);
-      font-size: 15px;
+      font-size: 17px;
       letter-spacing: -.025em;
     }
 
     .bridge-output-copy small {
       color: rgba(255,255,255,.54);
-      font-size: 8px;
+      font-size: 9px;
     }
 
     .bridge-proof-strip {
       grid-column: 1 / -1;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) auto;
       gap: 8px;
     }
 
@@ -1819,11 +1843,11 @@
 
     .bridge-proof-strip span {
       color: var(--quiet);
-      font-size: 6px;
+      font-size: 7px;
     }
 
     .bridge-proof-item strong {
-      font-size: 10px;
+      font-size: 11px;
       text-align: right;
     }
 
@@ -2572,7 +2596,7 @@
       padding: clamp(20px, 2.2vw, 30px);
       display: grid;
       grid-template-rows: auto auto minmax(0, 1fr);
-      gap: 16px;
+      gap: 12px;
       background:
         radial-gradient(circle at 80% 16%, rgba(var(--accent-rgb), .08), transparent 30%),
         var(--viewport);
@@ -2583,7 +2607,7 @@
       grid-template-columns: minmax(0, 1fr);
       align-items: start;
       gap: 0;
-      padding-bottom: 18px;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--line);
     }
 
@@ -2599,17 +2623,17 @@
     }
 
     .calibration-mast h2 {
-      max-width: 18ch;
-      margin: 8px 0 0;
-      font-size: clamp(34px, 3.7vw, 50px);
+      max-width: none;
+      margin: 6px 0 0;
+      font-size: clamp(34px, 3.4vw, 48px);
       line-height: .98;
       letter-spacing: -.055em;
       text-wrap: balance;
     }
 
     .calibration-summary {
-      margin: 10px 0 0;
-      max-width: 68ch;
+      margin: 8px 0 0;
+      max-width: 90ch;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.55;
@@ -2939,11 +2963,8 @@
     }
 
     .calibration-canvas {
-      overflow: auto;
-      padding-right: 4px;
-      padding-bottom: 4px;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(var(--text-rgb), .18) transparent;
+      overflow: hidden;
+      padding: 0;
     }
 
     .calibration-canvas::-webkit-scrollbar { width: 7px; height: 7px; }
@@ -2953,8 +2974,8 @@
     }
 
     .calibration-view {
-      height: auto;
-      min-height: 580px;
+      height: 100%;
+      min-height: 0;
     }
 
     .calibration-evidence-figure {
@@ -3007,7 +3028,6 @@
     }
 
     .calibration-method-eyebrow,
-    .calibration-map-label,
     .calibration-proof-label {
       color: var(--quiet);
       font-family: var(--mono);
@@ -3023,136 +3043,95 @@
 
     .calibration-method-view {
       display: grid;
-      grid-template-columns: minmax(0, 1.38fr) minmax(320px, .62fr);
-      grid-template-rows: minmax(420px, 1fr) auto;
-      gap: 14px;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 10px;
     }
 
-    .calibration-method-hero {
-      min-height: 0;
+    .calibration-method-intro {
+      display: block;
     }
 
-    .calibration-method-copy {
-      padding: 22px;
-      display: grid;
-      align-content: start;
-      gap: 20px;
-    }
-
-    .calibration-method-copy h3 {
-      margin: 7px 0 0;
-      font-size: clamp(25px, 2.2vw, 34px);
+    .calibration-method-intro h3 {
+      margin: 6px 0 0;
+      font-size: clamp(23px, 2vw, 31px);
       line-height: 1;
       letter-spacing: -.04em;
       text-wrap: balance;
     }
 
-    .calibration-method-copy > div > p {
-      margin: 12px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
+    .calibration-method-media {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
     }
 
-    .calibration-method-list {
+    .calibration-method-sensor {
+      min-width: 0;
+      min-height: 0;
+      margin: 0;
       display: grid;
-      gap: 0;
+      grid-template-rows: minmax(0, 1fr) auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(var(--text-rgb), .022);
     }
 
-    .calibration-method-step {
-      display: grid;
-      grid-template-columns: 34px minmax(0, 1fr);
+    .calibration-method-sensor > a {
+      min-height: 0;
+      display: block;
+      overflow: hidden;
+      background: #080a0b;
+    }
+
+    .calibration-method-sensor svg {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      display: block;
+    }
+
+    .calibration-method-sensor figcaption {
+      min-height: 54px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 12px;
-      padding: 14px 0;
       border-top: 1px solid var(--line);
     }
 
-    .calibration-method-step > span {
-      color: var(--accent);
-      font-family: var(--mono);
-      font-size: 10px;
-    }
-
-    .calibration-method-step div {
+    .calibration-method-sensor figcaption > div {
       display: grid;
       gap: 3px;
     }
 
-    .calibration-method-step strong {
-      font-size: 12px;
-      line-height: 1.3;
-    }
-
-    .calibration-method-step small {
-      color: var(--quiet);
-      font-size: 10px;
-      line-height: 1.45;
-    }
-
-    .calibration-runtime-map {
-      grid-column: 1 / -1;
-      padding: 16px;
-      display: grid;
-      grid-template-columns: minmax(150px, .7fr) auto minmax(180px, .9fr) minmax(300px, 1.35fr);
-      align-items: stretch;
-      gap: 12px;
-    }
-
-    .calibration-map-node,
-    .calibration-map-branch {
-      padding: 9px 10px;
-      display: grid;
-      align-content: center;
-      gap: 4px;
-    }
-
-    .calibration-map-node.hub {
-      border-radius: 10px;
-      background: var(--accent-soft);
-    }
-
-    .calibration-map-node strong,
-    .calibration-map-branch strong {
-      font-size: 12px;
-      line-height: 1.3;
-    }
-
-    .calibration-map-node small,
-    .calibration-map-branch small {
-      color: var(--quiet);
-      font-size: 9px;
-      line-height: 1.4;
-    }
-
-    .calibration-map-connector {
-      align-self: center;
-      color: var(--quiet);
+    .calibration-method-sensor figcaption span {
+      color: var(--accent);
       font-family: var(--mono);
-      font-size: 9px;
-      text-align: center;
-      white-space: nowrap;
+      font-size: 7px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
     }
 
-    .calibration-map-branches {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .calibration-map-branch {
-      border-left: 1px solid var(--line-strong);
+    .calibration-method-sensor figcaption strong {
+      font-size: 12px;
+      line-height: 1.3;
     }
 
     .calibration-pt3-view,
     .calibration-quest-view,
     .calibration-proof-view {
       display: grid;
+      height: 100%;
+      min-height: 0;
       gap: 10px;
     }
 
     .calibration-pt3-view {
       grid-template-columns: minmax(0, 1.42fr) minmax(340px, .58fr);
-      gap: 14px;
+      gap: 10px;
     }
 
     .calibration-pt3-sweep {
@@ -3162,12 +3141,12 @@
     .calibration-pt3-side {
       min-height: 0;
       display: grid;
-      grid-template-rows: minmax(270px, 1fr) auto auto auto;
+      grid-template-rows: minmax(0, 1fr) auto auto;
       gap: 10px;
     }
 
     .calibration-pt3-diagnostic {
-      min-height: 270px;
+      min-height: 0;
     }
 
     .calibration-metric-grid {
@@ -3225,8 +3204,8 @@
     }
 
     .calibration-quest-view {
-      grid-template-rows: auto minmax(0, 1fr) auto auto;
-      gap: 12px;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 10px;
     }
 
     .calibration-quest-intro {
@@ -3241,8 +3220,8 @@
       min-height: 0;
       display: grid;
       grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr);
-      grid-template-rows: repeat(2, minmax(245px, 1fr));
-      gap: 12px;
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 10px;
     }
 
     .calibration-quest-pairs {
@@ -3267,23 +3246,48 @@
     }
 
     .calibration-proof-view {
-      grid-template-columns: minmax(0, 1.35fr) minmax(340px, .65fr);
-      gap: 14px;
+      display: block;
     }
 
-    .calibration-headset-proof {
-      min-height: 0;
+    .calibration-proof-stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      background: #080a0b;
     }
 
-    .calibration-proof-sidebar {
-      min-height: 0;
+    .calibration-proof-image {
+      position: absolute;
+      inset: 0;
       display: grid;
-      grid-template-rows: auto minmax(0, 1fr);
-      gap: 12px;
+      place-items: center;
+      overflow: hidden;
+      background: #080a0b;
+    }
+
+    .calibration-proof-image img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .calibration-proof-overlay {
+      position: absolute;
+      z-index: 2;
+      width: min(300px, 25.5%);
+      border-color: rgba(255,255,255,.13);
+      background: rgba(10,12,11,.84);
+      backdrop-filter: blur(14px);
     }
 
     .calibration-hardware-note {
-      padding: 18px;
+      top: 14px;
+      left: 14px;
+      padding: 15px;
       display: grid;
       gap: 9px;
     }
@@ -3306,7 +3310,9 @@
     }
 
     .calibration-limit-card {
-      padding: 18px;
+      top: 14px;
+      right: 14px;
+      padding: 15px;
       display: grid;
       align-content: start;
       gap: 14px;
@@ -3325,7 +3331,7 @@
     }
 
     .calibration-limit-item {
-      padding: 12px 0;
+      padding: 10px 0;
       border-top: 1px solid var(--line);
       display: grid;
       grid-template-columns: minmax(92px, .34fr) minmax(0, 1fr);
@@ -3344,20 +3350,25 @@
     }
 
     @media (max-width: 1120px) {
-      .calibration-method-view {
-        grid-template-columns: minmax(0, 1.12fr) minmax(270px, .88fr);
-      }
-
-      .calibration-runtime-map {
-        grid-template-columns: minmax(110px, .65fr) auto minmax(140px, .8fr) minmax(250px, 1.4fr);
-      }
-
       .calibration-quest-metrics {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .calibration-limit-item {
+        grid-template-columns: 72px minmax(0, 1fr);
+        gap: 8px;
       }
     }
 
     @media (max-width: 900px) {
+      .calibration-canvas {
+        overflow-y: auto;
+      }
+
+      .calibration-view {
+        height: auto;
+      }
+
       .calibration-method-view,
       .calibration-pt3-view,
       .calibration-proof-view {
@@ -3365,23 +3376,19 @@
         grid-template-rows: auto;
       }
 
-      .calibration-method-hero,
+      .calibration-method-media,
       .calibration-pt3-sweep,
       .calibration-headset-proof {
         min-height: 420px;
       }
 
-      .calibration-runtime-map {
-        grid-column: auto;
+      .calibration-method-intro,
+      .calibration-method-media {
         grid-template-columns: 1fr;
       }
 
-      .calibration-map-connector {
-        padding: 2px 0;
-      }
-
-      .calibration-map-branches {
-        grid-template-columns: 1fr;
+      .calibration-method-sensor > a {
+        min-height: 280px;
       }
 
       .calibration-pt3-side {
@@ -3407,6 +3414,31 @@
 
       .calibration-proof-sidebar {
         grid-template-rows: auto auto;
+      }
+
+      .calibration-proof-stage {
+        height: auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        background: transparent;
+        overflow: visible;
+      }
+
+      .calibration-proof-image {
+        position: relative;
+        inset: auto;
+        min-height: 420px;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        overflow: hidden;
+      }
+
+      .calibration-proof-overlay {
+        position: static;
+        width: auto;
+        background: rgba(var(--text-rgb), .022);
+        backdrop-filter: none;
       }
     }
 
@@ -3733,6 +3765,24 @@
       transform: translateY(4px);
     }
 
+    @media (max-width: 1180px) {
+      .bridge-story {
+        height: auto;
+        grid-template-columns: minmax(0, 1fr) minmax(300px, .72fr);
+        grid-template-rows: auto minmax(380px, 1fr);
+      }
+
+      .bridge-source-bank {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: auto;
+      }
+
+      .bridge-story-heading { grid-column: 1 / -1; }
+      .bridge-source::after { display: none; }
+      .bridge-proof-strip { grid-column: 1 / -1; }
+    }
+
     @media (max-width: 860px) {
       .app {
         grid-template-columns: minmax(0, 1fr);
@@ -3762,12 +3812,12 @@
       .bridge-story {
         height: auto;
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto minmax(340px, 44vh) auto;
+        grid-template-rows: auto auto minmax(340px, 44vh);
       }
 
       .bridge-source-bank {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        grid-template-rows: auto auto;
+        grid-template-rows: auto;
       }
 
       .bridge-story-heading { grid-column: 1 / -1; }
@@ -3872,19 +3922,12 @@
         grid-template-columns: 1fr;
         grid-template-rows: auto;
       }
-      .calibration-method-hero,
+      .calibration-method-media,
       .calibration-review-shot,
       .calibration-headset-proof { min-height: 330px; }
-      .calibration-method-copy { min-height: 0; }
-      .calibration-runtime-map,
       .calibration-quest-metrics {
         grid-column: auto;
       }
-      .calibration-runtime-map {
-        grid-template-columns: 1fr;
-      }
-      .calibration-map-connector { padding: 2px 0; }
-      .calibration-map-branches { grid-template-columns: 1fr; }
       .calibration-pt3-side { grid-template-rows: minmax(330px, auto) auto auto auto; }
       .calibration-pt3-diagnostic { min-height: 330px; }
       .calibration-metric-grid,
@@ -3950,7 +3993,11 @@
       .bridge-stage:not(:last-child)::after { display: none; }
       .bridge-facts { grid-template-columns: 1fr; }
       .bridge-package-aside { grid-template-rows: none; }
-      .bridge-signal-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .bridge-signal-stages {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+      }
+      .bridge-signal-stage { grid-template-columns: 1fr; align-items: start; }
       .bridge-signal-line { display: none; }
       .bridge-proof-strip { grid-template-columns: 1fr; }
       .bridge-film { grid-template-rows: 660px auto; }
@@ -3986,6 +4033,16 @@
       .bridge-readme-step,
       .bridge-readme-cta { border-right: 0; }
       .bridge-readme-step::after { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .bridge-source-bank {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, minmax(76px, auto));
+      }
+
+      .bridge-story-heading { grid-column: auto; }
+      .bridge-source { min-height: 76px; gap: 6px; }
     }
 
     @media (max-height: 720px) and (min-width: 761px) {
@@ -4232,13 +4289,14 @@
     const BRIDGE_STORY_STATES = [
       {
         label: 'Connected rig',
-        type: 'PT3 + D435i',
-        title: 'Two devices. One browser.',
-        note: 'Both sensor families are enumerated and routed inside the same Quest application.',
-        image: '../dossier/quest-captures/sensor-view-03.jpg',
+        type: 'One sensor or both',
+        title: 'Use one sensor—or both.',
+        note: 'Either sensor can run on its own. A USB-C hub connects both simultaneously; the runtime discovers what is present and selects the correct backend.',
+        proof: 'Connected sensors discovered in one device browser',
+        image: '../dossier/integration/sensor-menu.jpg',
         alt: 'Quest USB Sensor Bridge showing connected PureThermal and Intel RealSense devices',
         route: 'USB descriptors → backend selection → Unity profiles',
-        detect: 'Enumerate attached USB',
+        detect: 'Enumerate connected USB devices',
         authorize: 'Track each device grant',
         backend: 'Route by sensor family',
         delivery: 'Expose stream profiles'
@@ -4248,7 +4306,8 @@
         type: 'Thermal / Y16',
         title: 'Raw heat becomes a Unity texture.',
         note: 'The Ocean path removes telemetry, applies the thermal palette, and preserves a stable live stream.',
-        image: '../dossier/quest-captures/sensor-view-04.jpg',
+        proof: 'Live PureThermal stream rendered in-headset',
+        image: '../dossier/integration/pt3-thermal.png',
         alt: 'PureThermal 3 streaming through Quest USB Sensor Bridge on Quest 3S',
         route: 'PureThermal Y16 → telemetry removal → Ironbow Texture2D',
         detect: 'Read PT3 firmware + IDs',
@@ -4261,7 +4320,8 @@
         type: 'RGB + depth',
         title: 'Depth arrives aligned and legible.',
         note: 'The RealSense path negotiates color and depth profiles, then delivers RGB or colorized depth.',
-        image: '../dossier/quest-captures/sensor-view-02.jpg',
+        proof: 'Live colorized depth rendered in-headset',
+        image: '../dossier/integration/realsense-depth.png',
         alt: 'Intel RealSense D435i colorized depth streaming on Quest 3S',
         route: 'D435i profiles → aligned depth → colorized Unity output',
         detect: 'Read RealSense descriptors',
@@ -4348,63 +4408,57 @@
     }
 
     function renderBridgeStory(activeIndex = 0) {
-      return `<section class="software-view bridge-readme">
-        <article class="software-card bridge-readme-stage">
-          <div class="bridge-readme-copy">
+      const state = BRIDGE_STORY_STATES[activeIndex] || BRIDGE_STORY_STATES[0];
+      const stages = [
+        ['Discover', state.detect],
+        ['Authorize', state.authorize],
+        ['Route', state.backend],
+        ['Deliver', state.delivery]
+      ];
+
+      return `<section class="software-view bridge-story" aria-live="polite">
+        <nav class="software-card bridge-source-bank" aria-label="Choose an integration path">
+          ${BRIDGE_STORY_STATES.map((item, index) => `
+            <button
+              class="bridge-source ${index === activeIndex ? 'active' : ''}"
+              data-bridge-source="${index}"
+              type="button"
+              aria-pressed="${index === activeIndex}"
+            >
+              <div class="bridge-source-copy">
+                <strong>${item.label}</strong>
+                <small>${item.type}</small>
+              </div>
+            </button>
+          `).join('')}
+        </nav>
+
+        <article class="software-card bridge-core">
+          <header class="bridge-core-header">
             <div>
-              <span class="bridge-readme-kicker">Runtime acquisition layer / Android XR</span>
-              <h3>USB sensor access beyond Unity's sandbox.</h3>
-              <p>A reusable package that crosses Unity's managed/native boundary to discover hardware, obtain USB permission, select a backend, and deliver live frames.</p>
+              <h3>${state.title}</h3>
+              <p class="bridge-core-note">${state.note}</p>
             </div>
-            <div class="bridge-tech-manifest" aria-label="Quest USB Sensor Bridge runtime boundary">
-              <div class="bridge-tech-row">
-                <span>PKG</span>
-                <strong>com.jomo.quest-usb-sensor-bridge</strong>
-                <small>v0.3.8</small>
-              </div>
-              <div class="bridge-tech-row">
-                <span>Unity</span>
-                <strong>C# runtime API → P/Invoke</strong>
-                <small>managed / native boundary</small>
-              </div>
-              <div class="bridge-tech-row">
-                <span>Android</span>
-                <strong>Native C++ → JNI → USB Manager</strong>
-                <small>permission + device access</small>
-              </div>
-              <div class="bridge-tech-row output">
-                <span>I/O</span>
-                <strong>Ocean/UVC · RealSense → Texture2D</strong>
-                <small>Y16 · RGB · depth</small>
-              </div>
+          </header>
+          <div class="bridge-signal" aria-label="${state.label} processing path">
+            <div class="bridge-signal-line" aria-hidden="true"></div>
+            <div class="bridge-signal-stages">
+              ${stages.map(([label, title]) => `
+                <div class="bridge-signal-stage">
+                  <span>${label}</span>
+                  <strong>${title}</strong>
+                </div>
+              `).join('')}
             </div>
-            <div class="bridge-readme-proof">
-              <span>Validated target</span>
-              <strong>QUEST 3S · ARM64-v8a · API 30</strong>
-            </div>
-          </div>
-          <div class="bridge-readme-media">
-            <figure class="bridge-readme-shot primary">
-              <img src="../dossier/integration/sensor-menu.jpg" alt="Quest USB Sensor Bridge menu listing PureThermal and Intel RealSense devices">
-              <figcaption><span>EVIDENCE_01 / DEVICE_ENUMERATION</span><strong>Attached sensors, selected backend, and permission state</strong></figcaption>
-            </figure>
-            <figure class="bridge-readme-shot">
-              <img src="../dossier/integration/realsense-depth.png" alt="Colorized Intel RealSense depth stream displayed on Quest">
-              <figcaption><span>EVIDENCE_02 / REALSENSE_DEPTH</span><strong>Colorized depth stream</strong></figcaption>
-            </figure>
-            <figure class="bridge-readme-shot">
-              <img src="../dossier/integration/pt3-thermal.png" alt="Rotated PureThermal ironbow stream displayed on Quest">
-              <figcaption><span>EVIDENCE_03 / PURETHERMAL_Y16</span><strong>Radiometric frames rendered in ironbow</strong></figcaption>
-            </figure>
           </div>
         </article>
-        <footer class="bridge-readme-process" aria-label="How Quest USB Sensor Bridge works">
-          <div class="bridge-readme-step"><span>01</span><strong>USB ENUM</strong><small>VID / PID discovery</small></div>
-          <div class="bridge-readme-step"><span>02</span><strong>PERMISSION</strong><small>Android grant handshake</small></div>
-          <div class="bridge-readme-step"><span>03</span><strong>BACKEND ROUTE</strong><small>UVC or RealSense path</small></div>
-          <div class="bridge-readme-step"><span>04</span><strong>FRAME COPY</strong><small>Native buffer → Texture2D</small></div>
-          <a class="bridge-readme-cta" href="https://github.com/jonymorse/quest-usb-sensor-bridge" target="_blank" rel="noreferrer">View repository ↗</a>
-        </footer>
+
+        <figure class="software-card bridge-output">
+          <img src="${state.image}" alt="${state.alt}">
+          <figcaption class="bridge-output-copy">
+            <strong>${state.proof}</strong>
+          </figcaption>
+        </figure>
       </section>`;
     }
 
@@ -4490,9 +4544,10 @@
       </section>`;
     }
 
-    function renderIntegrationView(view) {
+    function renderIntegrationView() {
       return renderBridgeStory(integrationActiveSensor);
 
+      /*
       if (view === 'architecture') {
         return `<section class="software-view architecture-view">
           <div class="software-section-heading">
@@ -4595,18 +4650,18 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
           <article class="software-card software-meta-card"><span class="software-meta-label">Current state</span><div class="software-meta-value">Working on-device prototype</div><div class="software-meta-note">Enumeration, permissions, stream selection, frame delivery, and view controls are validated on Quest 3S.</div></article>
         </div>
       </section>`;
+      */
     }
 
     function renderIntegrationWorkbench(view = 'overview') {
       return `<div class="integration-workbench">
         <header class="software-mast">
           <div>
-            <div class="software-kicker">SW-02 / Unity + Android plugin</div>
+            <div class="software-kicker">SW-02 / Runtime acquisition layer</div>
             <h2>Quest USB Sensor Bridge</h2>
-            <p class="software-summary">External USB-C cameras and sensors inside standalone Meta Quest applications.</p>
+            <p class="software-summary">One sensor integration layer brings thermal, RGB, and depth hardware into standalone Quest applications as Unity textures.</p>
           </div>
           <div class="software-status-stack">
-            <span class="software-status">v0.3.8 · Quest 3S validated</span>
             <a class="software-repo" href="https://github.com/jonymorse/quest-usb-sensor-bridge" target="_blank" rel="noreferrer">View repository ↗</a>
           </div>
         </header>
@@ -4635,9 +4690,8 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
               <div class="calibration-metric"><span>Correspondences</span><strong>644</strong></div>
               <div class="calibration-metric"><span>Projection RMS mean</span><strong>0.338 px</strong></div>
             </div>
-            <p class="calibration-detail-line">PT3 intrinsic RMS 0.096 px · stereo RMS 0.354 px · projection maximum 0.626 px · estimated baseline 53.2 mm</p>
             <div class="calibration-evidence-note">
-              The target has 23 × Ø20 mm apertures on 28 mm pitch: one 3-aperture row and four 5-aperture rows. Frames 5 and 24 were excluded. <a href="./calibration-target/" target="_blank" rel="noreferrer">Inspect target CAD ↗</a>
+              Target: 23 × Ø20 mm apertures on 28 mm pitch. <a href="./calibration-target/" target="_blank" rel="noreferrer">Inspect CAD ↗</a>
             </div>
           </aside>
         </section>`;
@@ -4671,78 +4725,64 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
             <div class="calibration-metric"><span>Robust inliers</span><strong>446 / 460</strong></div>
             <div class="calibration-metric"><span>Global median</span><strong>0.744 px</strong></div>
           </div>
-          <p class="calibration-detail-line">Global mean 0.950 px · p95 2.473 px · reviewed range 0.269–0.867 m · estimated baseline 85.1 mm</p>
         </section>`;
       }
 
       if (view === 'proof') {
         return `<section class="calibration-view calibration-proof-view">
-          <a class="calibration-card calibration-evidence-figure calibration-headset-proof" href="../dossier/calibration/on-headset-end-to-end.jpg" target="_blank" rel="noreferrer">
-            <img src="../dossier/calibration/on-headset-end-to-end.jpg" alt="Actual Quest passthrough capture with PT3 thermal energy aligned to the physical calibration-target apertures" loading="lazy">
-            <div class="calibration-figure-copy">
-              <div><span>Actual Quest output</span><strong>PT3 heat sampled through D435i geometry and placed in passthrough</strong></div>
-            </div>
-          </a>
-          <aside class="calibration-proof-sidebar">
-            <article class="calibration-card calibration-hardware-note">
-              <span class="calibration-proof-label">Observed on Quest 3S</span>
-              <strong>Both sensor streams stabilized in the production build.</strong>
-              <p>The APK launched, production scenes opened, and calibrated depth and thermal overlays appeared to work during normal use. No obvious blocking regression was observed.</p>
-            </article>
-            <article class="calibration-card calibration-limit-card">
-              <h3>What remains outside this result</h3>
+          <figure class="calibration-card calibration-proof-stage">
+            <a class="calibration-proof-image" href="../dossier/calibration/on-headset-end-to-end.jpg" target="_blank" rel="noreferrer">
+              <img src="../dossier/calibration/on-headset-end-to-end.jpg" alt="Actual Quest passthrough capture with PT3 thermal energy aligned to the physical calibration-target apertures" loading="lazy">
+            </a>
+            <figcaption class="calibration-card calibration-proof-overlay calibration-hardware-note">
+              <span class="calibration-proof-label">Actual Quest output</span>
+              <strong>The calibration closes the loop.</strong>
+              <p>PT3 heat is sampled through D435i geometry and placed in passthrough.</p>
+            </figcaption>
+            <aside class="calibration-card calibration-proof-overlay calibration-limit-card">
+              <h3>Limits of this result</h3>
               <div class="calibration-limit-list">
-                <div class="calibration-limit-item"><strong>Accuracy scope</strong><small>This is geometric registration; absolute thermal accuracy was not established.</small></div>
-                <div class="calibration-limit-item"><strong>Runtime effects</strong><small>The cameras were not hardware-synchronized. Parallax, depth edges, occlusion, and temporal lag can still create halos.</small></div>
-                <div class="calibration-limit-item"><strong>Rig and test scope</strong><small>Mount flex can invalidate the extrinsics. Formal profiler, lifecycle-stress, and repeated USB-reconnect baselines remain unmeasured.</small></div>
+                <div class="calibration-limit-item"><strong>Scope</strong><small>Geometric registration, not absolute temperature accuracy.</small></div>
+                <div class="calibration-limit-item"><strong>Timing</strong><small>No hardware sync; motion and occlusion can still create halos.</small></div>
+                <div class="calibration-limit-item"><strong>Rigidity</strong><small>Mount movement can invalidate the solved transforms.</small></div>
               </div>
-            </article>
-          </aside>
+            </aside>
+          </figure>
         </section>`;
       }
 
       return `<section class="calibration-view calibration-method-view">
-        <figure class="calibration-card calibration-evidence-figure calibration-method-hero">
-          <img src="../dossier/calibration/sensor-capture-triplet.png" alt="One calibration-target capture shown as D435i RGB, visualized 16-bit depth, and PT3 thermal" loading="lazy">
-          <figcaption class="calibration-figure-copy">
-            <div><span>Shared evidence / three sensors</span><strong>The same 23 aperture centers appear in visible, depth, and thermal data</strong></div>
-          </figcaption>
-        </figure>
-        <article class="calibration-card calibration-method-copy">
+        <header class="calibration-method-intro">
           <div>
-            <span class="calibration-method-eyebrow">Calibration strategy</span>
-            <h3>Use D435i RGB as the shared hub.</h3>
-            <p>The heated apertures provide the same physical centers across modalities. The RealSense factory calibration connects live depth to RGB, leaving two unknown rigid transforms to solve from reviewed observations.</p>
+            <span class="calibration-method-eyebrow">One capture / three signals</span>
+            <h3>D435i RGB is the shared frame.</h3>
           </div>
-          <div class="calibration-method-list">
-            <div class="calibration-method-step"><span>01</span><div><strong>D435i RGB → PT3 optical</strong><small>Solve the PT3 camera model and rigid sensor-pair transform.</small></div></div>
-            <div class="calibration-method-step"><span>02</span><div><strong>D435i RGB → Quest PCA</strong><small>Lift reviewed D435i points into 3D with aligned depth, then fit them to Quest image points.</small></div></div>
-          </div>
-        </article>
-        <div class="calibration-card calibration-runtime-map" aria-label="Calibration runtime frame graph">
-          <div class="calibration-map-node">
-            <span class="calibration-map-label">Surface geometry</span>
-            <strong>D435i depth optical</strong>
-            <small>Valid live surface points</small>
-          </div>
-          <div class="calibration-map-connector">factory RealSense alignment →</div>
-          <div class="calibration-map-node hub">
-            <span class="calibration-map-label">Shared hub</span>
-            <strong>D435i RGB optical</strong>
-            <small>Reference frame for both solves</small>
-          </div>
-          <div class="calibration-map-branches">
-            <div class="calibration-map-branch">
-              <span class="calibration-map-label">Solve A</span>
-              <strong>D435i RGB → PT3 optical</strong>
-              <small>Sample the thermal frame</small>
-            </div>
-            <div class="calibration-map-branch">
-              <span class="calibration-map-label">Solve B</span>
-              <strong>D435i RGB → Quest PCA</strong>
-              <small>Render with the live PCA pose</small>
-            </div>
-          </div>
+        </header>
+        <div class="calibration-method-media" aria-label="The same calibration target observed by three sensors">
+          <figure class="calibration-method-sensor">
+            <a href="../dossier/calibration/sensor-capture-triplet.png" target="_blank" rel="noreferrer" aria-label="Open the complete three-sensor calibration capture">
+              <svg viewBox="58 181 520 401" role="img" aria-label="D435i RGB view of the calibration target" preserveAspectRatio="xMidYMid slice">
+                <image href="../dossier/calibration/sensor-capture-triplet.png" width="1800" height="690"></image>
+              </svg>
+            </a>
+            <figcaption><div><span>01 / D435i RGB</span><strong>Visible target geometry</strong></div></figcaption>
+          </figure>
+          <figure class="calibration-method-sensor">
+            <a href="../dossier/calibration/sensor-capture-triplet.png" target="_blank" rel="noreferrer" aria-label="Open the complete three-sensor calibration capture">
+              <svg viewBox="643 181 520 401" role="img" aria-label="D435i aligned depth view of the calibration target" preserveAspectRatio="xMidYMid slice">
+                <image href="../dossier/calibration/sensor-capture-triplet.png" width="1800" height="690"></image>
+              </svg>
+            </a>
+            <figcaption><div><span>02 / D435i depth</span><strong>Live surface geometry</strong></div></figcaption>
+          </figure>
+          <figure class="calibration-method-sensor">
+            <a href="../dossier/calibration/sensor-capture-triplet.png" target="_blank" rel="noreferrer" aria-label="Open the complete three-sensor calibration capture">
+              <svg viewBox="1228 181 520 411" role="img" aria-label="PureThermal 3 view of the heated calibration target" preserveAspectRatio="xMidYMid slice">
+                <image href="../dossier/calibration/sensor-capture-triplet.png" width="1800" height="690"></image>
+              </svg>
+            </a>
+            <figcaption><div><span>03 / PT3 thermal</span><strong>Radiated heat through 23 apertures</strong></div></figcaption>
+          </figure>
         </div>
       </section>`;
     }
@@ -4921,16 +4961,6 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
       const canvas = document.getElementById('integrationCanvas');
       if (canvas) canvas.innerHTML = renderBridgeStory(integrationActiveSensor);
     }
-
-    visualLayer.addEventListener('pointerover', e => {
-      const source = e.target.closest('[data-bridge-source]');
-      if (source) activateBridgeSource(Number(source.dataset.bridgeSource));
-    });
-
-    visualLayer.addEventListener('focusin', e => {
-      const source = e.target.closest('[data-bridge-source]');
-      if (source) activateBridgeSource(Number(source.dataset.bridgeSource));
-    });
 
     visualLayer.addEventListener('click', e => {
       const bridgeFilmToggle = e.target.closest('[data-bridge-film-toggle]');

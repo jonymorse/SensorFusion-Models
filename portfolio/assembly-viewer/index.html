@@ -16,6 +16,23 @@
     <script type="module" crossorigin src="./assets/viewer-B8XBbwhQ.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/OrbitControls-qb7j3oR3.js">
     <link rel="stylesheet" crossorigin href="./assets/viewer-BxEF9m8C.css">
+    <style>
+      body.embed-dossier .explode-panel {
+        grid-template-columns: 112px minmax(110px, 1fr) 82px;
+      }
+
+      @media (max-width: 860px) {
+        .explode-panel {
+          grid-template-columns: 78px minmax(70px, 1fr) 72px;
+        }
+      }
+
+      @media (max-width: 540px) {
+        .explode-panel {
+          grid-template-columns: 70px minmax(54px, 1fr) 66px;
+        }
+      }
+    </style>
   </head>
   <body>
     <main class="app-shell">
@@ -65,7 +82,6 @@
           aria-label="Exploded view amount"
         />
         <button type="button" id="explode-toggle">Explode</button>
-        <a class="viewer-link" href="./" target="_blank" rel="noreferrer">Full viewer ↗</a>
       </section>
       </div>
 
