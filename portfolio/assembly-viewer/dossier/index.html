@@ -2569,10 +2569,10 @@
     .calibration-workbench {
       position: absolute;
       inset: 0;
-      padding: 18px;
+      padding: clamp(20px, 2.2vw, 30px);
       display: grid;
       grid-template-rows: auto auto minmax(0, 1fr);
-      gap: 11px;
+      gap: 16px;
       background:
         radial-gradient(circle at 80% 16%, rgba(var(--accent-rgb), .08), transparent 30%),
         var(--viewport);
@@ -2580,69 +2580,39 @@
 
     .calibration-mast {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: end;
-      gap: 22px;
-      padding-bottom: 11px;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+      gap: 0;
+      padding-bottom: 18px;
       border-bottom: 1px solid var(--line);
     }
 
-    .calibration-kicker,
-    .calibration-label,
-    .calibration-step-index,
-    .calibration-stat span {
+    .calibration-kicker {
       font-family: var(--mono);
       text-transform: uppercase;
       letter-spacing: .11em;
     }
 
-    .calibration-kicker,
-    .calibration-label,
-    .calibration-step-index {
-      color: var(--quiet);
-      font-size: 7px;
+    .calibration-kicker {
+      color: var(--accent);
+      font-size: 9px;
     }
 
     .calibration-mast h2 {
-      margin: 5px 0 0;
-      font-size: clamp(34px, 4vw, 58px);
-      line-height: .94;
+      max-width: 18ch;
+      margin: 8px 0 0;
+      font-size: clamp(34px, 3.7vw, 50px);
+      line-height: .98;
       letter-spacing: -.055em;
+      text-wrap: balance;
     }
 
     .calibration-summary {
-      margin: 7px 0 0;
-      max-width: 72ch;
+      margin: 10px 0 0;
+      max-width: 68ch;
       color: var(--muted);
-      font-size: 11px;
-      line-height: 1.45;
-    }
-
-    .calibration-mast-metrics {
-      display: grid;
-      grid-template-columns: repeat(3, auto);
-      gap: 7px;
-    }
-
-    .calibration-stat {
-      min-width: 82px;
-      padding: 8px 10px;
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      background: rgba(var(--text-rgb), .025);
-    }
-
-    .calibration-stat span {
-      display: block;
-      color: var(--quiet);
-      font-size: 6px;
-    }
-
-    .calibration-stat strong {
-      display: block;
-      margin-top: 4px;
-      font-size: 14px;
-      letter-spacing: -.025em;
+      font-size: 13px;
+      line-height: 1.55;
     }
 
     .calibration-canvas {
@@ -2955,29 +2925,23 @@
       min-width: 0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      justify-content: flex-start;
+      gap: 10px;
     }
 
     .calibration-tab-row .software-tabs {
       min-width: 0;
     }
 
-    .calibration-scope-chip {
-      flex: 0 0 auto;
-      padding: 7px 10px;
-      border: 1px solid rgba(var(--accent-rgb), .32);
-      border-radius: 999px;
-      color: var(--accent);
-      background: var(--accent-soft);
-      font-family: var(--mono);
-      font-size: 7px;
-      text-transform: uppercase;
-      letter-spacing: .09em;
+    .calibration-tab-row .software-tab {
+      padding: 9px 13px;
+      font-size: 9px;
     }
 
     .calibration-canvas {
       overflow: auto;
+      padding-right: 4px;
+      padding-bottom: 4px;
       scrollbar-width: thin;
       scrollbar-color: rgba(var(--text-rgb), .18) transparent;
     }
@@ -2989,7 +2953,8 @@
     }
 
     .calibration-view {
-      min-height: 430px;
+      height: auto;
+      min-height: 580px;
     }
 
     .calibration-evidence-figure {
@@ -2997,6 +2962,8 @@
       margin: 0;
       min-width: 0;
       min-height: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
       overflow: hidden;
       background: #080a0b;
     }
@@ -3004,6 +2971,7 @@
     .calibration-evidence-figure > img {
       width: 100%;
       height: 100%;
+      min-height: 0;
       display: block;
       object-fit: contain;
       background: #080a0b;
@@ -3014,20 +2982,14 @@
     }
 
     .calibration-figure-copy {
-      position: absolute;
-      right: 9px;
-      bottom: 9px;
-      left: 9px;
       display: flex;
-      align-items: end;
+      align-items: start;
       justify-content: space-between;
-      gap: 12px;
-      padding: 9px 10px;
-      border: 1px solid rgba(255,255,255,.13);
-      border-radius: 10px;
-      color: rgba(255,255,255,.92);
-      background: rgba(5,7,7,.78);
-      backdrop-filter: blur(12px);
+      gap: 16px;
+      padding: 12px 14px 13px;
+      border-top: 1px solid var(--line);
+      color: var(--text);
+      background: rgba(var(--text-rgb), .025);
     }
 
     .calibration-figure-copy > div {
@@ -3037,9 +2999,9 @@
     }
 
     .calibration-figure-copy span {
-      color: rgba(255,255,255,.52);
+      color: var(--quiet);
       font-family: var(--mono);
-      font-size: 7px;
+      font-size: 8px;
       text-transform: uppercase;
       letter-spacing: .1em;
     }
@@ -3049,31 +3011,21 @@
     .calibration-proof-label {
       color: var(--quiet);
       font-family: var(--mono);
-      font-size: 7px;
+      font-size: 8px;
       text-transform: uppercase;
       letter-spacing: .1em;
     }
 
     .calibration-figure-copy strong {
-      font-size: 11px;
-      line-height: 1.25;
-    }
-
-    .calibration-figure-copy small {
-      flex: 0 0 auto;
-      max-width: 24ch;
-      color: var(--accent);
-      font-family: var(--mono);
-      font-size: 7px;
+      font-size: 13px;
       line-height: 1.3;
-      text-align: right;
     }
 
     .calibration-method-view {
       display: grid;
-      grid-template-columns: minmax(0, 1.32fr) minmax(290px, .68fr);
-      grid-template-rows: minmax(0, 1fr) auto;
-      gap: 10px;
+      grid-template-columns: minmax(0, 1.38fr) minmax(320px, .62fr);
+      grid-template-rows: minmax(420px, 1fr) auto;
+      gap: 14px;
     }
 
     .calibration-method-hero {
@@ -3081,43 +3033,44 @@
     }
 
     .calibration-method-copy {
-      padding: 14px;
+      padding: 22px;
       display: grid;
       align-content: start;
-      gap: 12px;
+      gap: 20px;
     }
 
     .calibration-method-copy h3 {
-      margin: 5px 0 0;
-      font-size: 22px;
-      line-height: 1.02;
+      margin: 7px 0 0;
+      font-size: clamp(25px, 2.2vw, 34px);
+      line-height: 1;
       letter-spacing: -.04em;
+      text-wrap: balance;
     }
 
     .calibration-method-copy > div > p {
-      margin: 8px 0 0;
+      margin: 12px 0 0;
       color: var(--muted);
-      font-size: 10px;
-      line-height: 1.48;
+      font-size: 13px;
+      line-height: 1.55;
     }
 
     .calibration-method-list {
       display: grid;
-      gap: 6px;
+      gap: 0;
     }
 
     .calibration-method-step {
       display: grid;
-      grid-template-columns: 27px minmax(0, 1fr);
-      gap: 9px;
-      padding: 8px 0;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 12px;
+      padding: 14px 0;
       border-top: 1px solid var(--line);
     }
 
     .calibration-method-step > span {
       color: var(--accent);
       font-family: var(--mono);
-      font-size: 8px;
+      font-size: 10px;
     }
 
     .calibration-method-step div {
@@ -3126,59 +3079,56 @@
     }
 
     .calibration-method-step strong {
-      font-size: 10px;
-      line-height: 1.25;
+      font-size: 12px;
+      line-height: 1.3;
     }
 
     .calibration-method-step small {
       color: var(--quiet);
-      font-size: 8px;
-      line-height: 1.35;
+      font-size: 10px;
+      line-height: 1.45;
     }
 
     .calibration-runtime-map {
       grid-column: 1 / -1;
-      padding: 10px;
+      padding: 16px;
       display: grid;
-      grid-template-columns: minmax(120px, .7fr) auto minmax(150px, .9fr) minmax(280px, 1.4fr);
+      grid-template-columns: minmax(150px, .7fr) auto minmax(180px, .9fr) minmax(300px, 1.35fr);
       align-items: stretch;
-      gap: 8px;
+      gap: 12px;
     }
 
     .calibration-map-node,
     .calibration-map-branch {
-      padding: 8px 9px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
+      padding: 9px 10px;
       display: grid;
       align-content: center;
-      gap: 3px;
-      background: rgba(var(--text-rgb), .02);
+      gap: 4px;
     }
 
     .calibration-map-node.hub {
-      border-color: rgba(var(--accent-rgb), .45);
+      border-radius: 10px;
       background: var(--accent-soft);
     }
 
     .calibration-map-node strong,
     .calibration-map-branch strong {
-      font-size: 10px;
-      line-height: 1.2;
+      font-size: 12px;
+      line-height: 1.3;
     }
 
     .calibration-map-node small,
     .calibration-map-branch small {
       color: var(--quiet);
-      font-size: 7px;
-      line-height: 1.3;
+      font-size: 9px;
+      line-height: 1.4;
     }
 
     .calibration-map-connector {
       align-self: center;
       color: var(--quiet);
       font-family: var(--mono);
-      font-size: 7px;
+      font-size: 9px;
       text-align: center;
       white-space: nowrap;
     }
@@ -3186,7 +3136,11 @@
     .calibration-map-branches {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 7px;
+      gap: 10px;
+    }
+
+    .calibration-map-branch {
+      border-left: 1px solid var(--line-strong);
     }
 
     .calibration-pt3-view,
@@ -3197,7 +3151,8 @@
     }
 
     .calibration-pt3-view {
-      grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+      grid-template-columns: minmax(0, 1.42fr) minmax(340px, .58fr);
+      gap: 14px;
     }
 
     .calibration-pt3-sweep {
@@ -3207,25 +3162,25 @@
     .calibration-pt3-side {
       min-height: 0;
       display: grid;
-      grid-template-rows: minmax(190px, 1fr) auto auto;
-      gap: 8px;
+      grid-template-rows: minmax(270px, 1fr) auto auto auto;
+      gap: 10px;
     }
 
     .calibration-pt3-diagnostic {
-      min-height: 190px;
+      min-height: 270px;
     }
 
     .calibration-metric-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 6px;
+      gap: 8px;
     }
 
     .calibration-metric {
       min-width: 0;
-      padding: 8px;
+      padding: 12px;
       border: 1px solid var(--line);
-      border-radius: 10px;
+      border-radius: 12px;
       background: rgba(var(--text-rgb), .02);
     }
 
@@ -3233,26 +3188,26 @@
       display: block;
       color: var(--quiet);
       font-family: var(--mono);
-      font-size: 6px;
-      line-height: 1.25;
+      font-size: 7px;
+      line-height: 1.35;
       text-transform: uppercase;
       letter-spacing: .08em;
     }
 
     .calibration-metric strong {
       display: block;
-      margin-top: 4px;
-      font-size: 12px;
+      margin-top: 6px;
+      font-size: 14px;
       letter-spacing: -.025em;
     }
 
     .calibration-evidence-note {
-      padding: 9px 10px;
+      padding: 12px 14px;
       border-left: 2px solid var(--accent);
       color: var(--muted);
       background: var(--accent-soft);
-      font-size: 8px;
-      line-height: 1.4;
+      font-size: 10px;
+      line-height: 1.5;
     }
 
     .calibration-evidence-note a {
@@ -3261,35 +3216,59 @@
       white-space: nowrap;
     }
 
+    .calibration-detail-line {
+      margin: 0;
+      color: var(--quiet);
+      font-family: var(--mono);
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
     .calibration-quest-view {
-      grid-template-columns: minmax(0, 1.24fr) minmax(300px, .76fr);
-      grid-template-rows: minmax(0, 1fr) auto;
+      grid-template-rows: auto minmax(0, 1fr) auto auto;
+      gap: 12px;
+    }
+
+    .calibration-quest-intro {
+      margin: 0;
+      max-width: 88ch;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .calibration-quest-story {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr);
+      grid-template-rows: repeat(2, minmax(245px, 1fr));
+      gap: 12px;
+    }
+
+    .calibration-quest-pairs {
+      grid-column: 1;
+      grid-row: 1;
     }
 
     .calibration-review-shot {
-      min-height: 0;
+      grid-column: 1;
+      grid-row: 2;
     }
 
-    .calibration-quest-gallery {
-      min-height: 0;
-      display: grid;
-      grid-template-rows: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .calibration-quest-gallery .calibration-evidence-figure {
-      min-height: 150px;
+    .calibration-quest-result {
+      grid-column: 2;
+      grid-row: 1 / 3;
     }
 
     .calibration-quest-metrics {
-      grid-column: 1 / -1;
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 6px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
     }
 
     .calibration-proof-view {
-      grid-template-columns: minmax(0, 1.25fr) minmax(330px, .75fr);
+      grid-template-columns: minmax(0, 1.35fr) minmax(340px, .65fr);
+      gap: 14px;
     }
 
     .calibration-headset-proof {
@@ -3299,18 +3278,14 @@
     .calibration-proof-sidebar {
       min-height: 0;
       display: grid;
-      grid-template-rows: minmax(155px, .72fr) auto minmax(0, 1fr);
-      gap: 8px;
-    }
-
-    .calibration-before-after {
-      min-height: 155px;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 12px;
     }
 
     .calibration-hardware-note {
-      padding: 10px 11px;
+      padding: 18px;
       display: grid;
-      gap: 5px;
+      gap: 9px;
     }
 
     .calibration-hardware-note .calibration-proof-label {
@@ -3318,53 +3293,54 @@
     }
 
     .calibration-hardware-note strong {
-      font-size: 12px;
+      font-size: 18px;
+      line-height: 1.15;
       letter-spacing: -.02em;
     }
 
     .calibration-hardware-note p {
       margin: 0;
       color: var(--muted);
-      font-size: 8px;
-      line-height: 1.42;
+      font-size: 11px;
+      line-height: 1.55;
     }
 
     .calibration-limit-card {
-      padding: 10px 11px;
+      padding: 18px;
       display: grid;
       align-content: start;
-      gap: 7px;
+      gap: 14px;
     }
 
     .calibration-limit-card h3 {
       margin: 0;
-      font-size: 14px;
+      font-size: 19px;
+      line-height: 1.1;
       letter-spacing: -.025em;
     }
 
     .calibration-limit-list {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 6px;
+      gap: 0;
     }
 
     .calibration-limit-item {
-      padding: 7px;
-      border: 1px solid var(--line);
-      border-radius: 9px;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
       display: grid;
-      gap: 3px;
-      background: rgba(var(--text-rgb), .018);
+      grid-template-columns: minmax(92px, .34fr) minmax(0, 1fr);
+      gap: 12px;
     }
 
     .calibration-limit-item strong {
-      font-size: 8px;
+      font-size: 10px;
+      line-height: 1.4;
     }
 
     .calibration-limit-item small {
       color: var(--quiet);
-      font-size: 7px;
-      line-height: 1.3;
+      font-size: 9px;
+      line-height: 1.5;
     }
 
     @media (max-width: 1120px) {
@@ -3378,6 +3354,59 @@
 
       .calibration-quest-metrics {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .calibration-method-view,
+      .calibration-pt3-view,
+      .calibration-proof-view {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+
+      .calibration-method-hero,
+      .calibration-pt3-sweep,
+      .calibration-headset-proof {
+        min-height: 420px;
+      }
+
+      .calibration-runtime-map {
+        grid-column: auto;
+        grid-template-columns: 1fr;
+      }
+
+      .calibration-map-connector {
+        padding: 2px 0;
+      }
+
+      .calibration-map-branches {
+        grid-template-columns: 1fr;
+      }
+
+      .calibration-pt3-side {
+        grid-template-rows: minmax(340px, auto) auto auto auto;
+      }
+
+      .calibration-quest-story {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+
+      .calibration-quest-pairs,
+      .calibration-review-shot,
+      .calibration-quest-result {
+        grid-column: auto;
+        grid-row: auto;
+        min-height: 380px;
+      }
+
+      .calibration-quest-result {
+        min-height: 520px;
+      }
+
+      .calibration-proof-sidebar {
+        grid-template-rows: auto auto;
       }
     }
 
@@ -3814,13 +3843,12 @@
       .operator-mode-option img { width: 100%; height: 68px; min-height: 0; }
       .operator-mode-option-copy { display: none; }
       .operator-mode-key { top: auto; right: 7px; bottom: 7px; left: auto; }
-      .calibration-workbench { padding: 14px; gap: 9px; }
-      .calibration-mast { grid-template-columns: 1fr; gap: 9px; }
-      .calibration-mast h2 { font-size: clamp(34px, 10vw, 50px); }
-      .calibration-mast-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .calibration-stat { min-width: 0; }
+      .calibration-workbench { padding: 18px; gap: 14px; }
+      .calibration-mast { grid-template-columns: 1fr; gap: 0; padding-bottom: 14px; }
+      .calibration-mast h2 { font-size: clamp(34px, 10vw, 46px); }
+      .calibration-summary { font-size: 12px; }
       .calibration-canvas { overflow-y: auto; }
-      .calibration-view { height: auto; min-height: 560px; }
+      .calibration-view { height: auto; min-height: 0; }
       .calibration-solve-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .calibration-step:not(:last-child)::after { display: none; }
       .calibration-frame-chain { grid-template-columns: repeat(5, minmax(104px, 1fr)); overflow-x: auto; }
@@ -3837,7 +3865,6 @@
       }
       .calibration-tab-row::-webkit-scrollbar { display: none; }
       .calibration-tab-row .software-tabs { flex: 0 0 auto; }
-      .calibration-scope-chip { display: none; }
       .calibration-method-view,
       .calibration-pt3-view,
       .calibration-quest-view,
@@ -3858,12 +3885,17 @@
       }
       .calibration-map-connector { padding: 2px 0; }
       .calibration-map-branches { grid-template-columns: 1fr; }
-      .calibration-pt3-side { grid-template-rows: minmax(310px, auto) auto auto; }
-      .calibration-pt3-diagnostic { min-height: 310px; }
-      .calibration-quest-gallery { grid-template-rows: repeat(2, minmax(280px, auto)); }
-      .calibration-quest-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .calibration-proof-sidebar { grid-template-rows: minmax(280px, auto) auto auto; }
-      .calibration-before-after { min-height: 280px; }
+      .calibration-pt3-side { grid-template-rows: minmax(330px, auto) auto auto auto; }
+      .calibration-pt3-diagnostic { min-height: 330px; }
+      .calibration-metric-grid,
+      .calibration-quest-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .calibration-quest-story { grid-template-columns: 1fr; grid-template-rows: auto; }
+      .calibration-quest-pairs,
+      .calibration-review-shot,
+      .calibration-quest-result { grid-column: auto; grid-row: auto; min-height: 330px; }
+      .calibration-quest-result { min-height: 480px; }
+      .calibration-proof-sidebar { grid-template-rows: auto auto; }
+      .calibration-limit-item { grid-template-columns: 1fr; gap: 5px; }
       .calibration-visual { grid-template-columns: 1fr; }
       .calibration-system .calibration-capture { min-height: 260px; }
       .frame-stack { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: 1fr; }
@@ -4138,13 +4170,10 @@
           visual: "calibration"
         },
         components: [
-          { label: "Calibration Target", type: "fixture", status: "Used", purpose: "Create the same 23 reference centers in RGB, depth, and thermal.", decisions: "Use a heated aperture target rather than a camera-only checkerboard.", process: "Record near, far, tilted, rotated, and edge-of-frame poses.", evidence: ["RGB/depth/thermal capture", "Pose sweep", "Target CAD"] },
-          { label: "PT3 Camera Model", type: "camera model", status: "Solved", purpose: "Estimate PT3 intrinsics and its rigid transform from D435i RGB.", decisions: "Review all accepted target centers before promoting the solve.", process: "Use 28 accepted views × 23 points and inspect per-view residuals.", evidence: ["Golden calibration JSON", "28-view diagnostics", "0.338 px mean"] },
-          { label: "Quest Extrinsics", type: "pose", status: "Reviewed", purpose: "Estimate the D435i RGB to Quest passthrough-camera transform.", decisions: "Use aligned D435i depth to lift target observations into 3D.", process: "Review 20 paired captures, reject outliers, and run a robust global fit.", evidence: ["460 source points", "446 inliers", "0.744 px median"] },
-          { label: "Coordinate Frames", type: "model", status: "Documented", purpose: "Make every transform explicit: sensor, headset, world, and display.", decisions: "Document frames early so debugging does not become guesswork.", process: "Draw frame graph, define handedness/units, validate with simple projected points.", evidence: ["Frame graph", "Axes test", "Notes"] },
-          { label: "Projection Pipeline", type: "math", status: "Working", purpose: "Use D435i depth as geometry, sample PT3 thermal, and project into Quest.", decisions: "Treat D435i RGB as the hub between factory and reviewed transforms.", process: "Depth optical → RGB optical, then branch to PT3 sampling and Quest projection.", evidence: ["Runtime frame graph", "On-headset target", "Thermal overlay"] },
-          { label: "Error Metrics", type: "validation", status: "Reported", purpose: "Quantify alignment quality instead of judging only by eye.", decisions: "Report global and per-view residuals with clear statistic labels.", process: "Inspect accepted captures across distance and target angle.", evidence: ["PT3 RMS", "Quest median/mean/p95", "Validation sheets"] },
-          { label: "Hardware Check", type: "testing", status: "Observed on hardware", purpose: "Confirm the calibrated pipeline runs with both sensors on Quest.", decisions: "Record practical hardware observations without claiming unmeasured stress or profiler results.", process: "Launch the production APK and exercise calibrated scenes during normal use.", evidence: ["Stable dual streaming", "On-headset capture", "No blocking regression observed"] }
+          { label: "Shared Target", type: "fixture", status: "Used", purpose: "Create the same 23 reference centers in RGB, depth, and thermal.", decisions: "Use a heated aperture target rather than a camera-only checkerboard.", process: "Record varied target distance, position, tilt, and rotation.", evidence: ["RGB/depth/thermal capture", "Pose sweep", "Target CAD"] },
+          { label: "PT3 ↔ D435i", type: "camera solve", status: "Solved", purpose: "Estimate the PT3 camera model and rigid transform from D435i RGB.", decisions: "Review all accepted target centers before promoting the solve.", process: "Use 28 accepted views × 23 points and inspect reprojection residuals.", evidence: ["644 correspondences", "28-view diagnostics", "0.338 px mean"] },
+          { label: "D435i ↔ Quest", type: "camera solve", status: "Reviewed", purpose: "Estimate the D435i RGB to Quest passthrough-camera transform.", decisions: "Use aligned D435i depth to lift reviewed observations into 3D.", process: "Review 20 paired captures and run a robust global fit.", evidence: ["446 / 460 inliers", "0.744 px median", "Validation sheet"] },
+          { label: "On-headset Check", type: "hardware", status: "Observed", purpose: "Confirm the calibrated pipeline runs with both sensors on Quest.", decisions: "Report practical hardware observations without claiming unmeasured stress or profiler results.", process: "Launch the production APK and exercise calibrated overlays during normal use.", evidence: ["Stable dual streaming", "On-headset capture", "No blocking regression observed"] }
         ]
       },
       operator: {
@@ -4591,28 +4620,24 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
           <a class="calibration-card calibration-evidence-figure calibration-pt3-sweep" href="../dossier/calibration/pt3-pose-sweep.jpg" target="_blank" rel="noreferrer">
             <img src="../dossier/calibration/pt3-pose-sweep.jpg" alt="Representative D435i RGB and PT3 thermal calibration captures at varied distances, tilts, and rotations" loading="lazy">
             <div class="calibration-figure-copy">
-              <div><span>Capture diversity</span><strong>Near, far, tilted, rotated, and edge-of-frame observations</strong></div>
-              <small>30 recorded · 28 accepted ↗</small>
+              <div><span>Input / pose sweep</span><strong>Near, far, tilted, rotated, and edge-of-frame observations</strong></div>
             </div>
           </a>
           <aside class="calibration-pt3-side">
             <a class="calibration-card calibration-evidence-figure calibration-pt3-diagnostic" href="../dossier/calibration/pt3-full-solver-diagnostics.jpg" target="_blank" rel="noreferrer">
               <img src="../dossier/calibration/pt3-reprojection.png" alt="PT3 thermal target with annotated and predicted aperture centers nearly overlapping" loading="lazy">
               <div class="calibration-figure-copy">
-                <div><span>Representative accepted view</span><strong>Annotated centers and solved projections nearly coincide</strong></div>
-                <small>All 28 views ↗</small>
+                <div><span>Result / reprojection</span><strong>Reviewed centers and predicted centers nearly coincide</strong></div>
               </div>
             </a>
             <div class="calibration-metric-grid" aria-label="PT3 and D435i calibration metrics">
-              <div class="calibration-metric"><span>Accepted views</span><strong>28 / 30</strong></div>
+              <div class="calibration-metric"><span>Views accepted</span><strong>28 / 30</strong></div>
               <div class="calibration-metric"><span>Correspondences</span><strong>644</strong></div>
-              <div class="calibration-metric"><span>PT3 intrinsic RMS</span><strong>0.096 px</strong></div>
-              <div class="calibration-metric"><span>Stereo RMS</span><strong>0.354 px</strong></div>
-              <div class="calibration-metric"><span>Projection mean</span><strong>0.338 px</strong></div>
-              <div class="calibration-metric"><span>Projection maximum</span><strong>0.626 px</strong></div>
+              <div class="calibration-metric"><span>Projection RMS mean</span><strong>0.338 px</strong></div>
             </div>
+            <p class="calibration-detail-line">PT3 intrinsic RMS 0.096 px · stereo RMS 0.354 px · projection maximum 0.626 px · estimated baseline 53.2 mm</p>
             <div class="calibration-evidence-note">
-              The target is one 3-aperture row plus four 5-aperture rows: 23 × Ø20 mm on 28 mm pitch. Frames 5 and 24 were excluded; estimated baseline is 53.2 mm. Green circles are reviewed centers and red crosses are predicted centers. <a href="./calibration-target/" target="_blank" rel="noreferrer">Inspect target CAD ↗</a>
+              The target has 23 × Ø20 mm apertures on 28 mm pitch: one 3-aperture row and four 5-aperture rows. Frames 5 and 24 were excluded. <a href="./calibration-target/" target="_blank" rel="noreferrer">Inspect target CAD ↗</a>
             </div>
           </aside>
         </section>`;
@@ -4620,37 +4645,33 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
 
       if (view === 'quest') {
         return `<section class="calibration-view calibration-quest-view">
-          <a class="calibration-card calibration-evidence-figure calibration-review-shot" href="../dossier/calibration/quest-correspondence-review.png" target="_blank" rel="noreferrer">
-            <img src="../dossier/calibration/quest-correspondence-review.png" alt="Quest rig calibration review interface showing D435i aligned-depth samples and editable Quest target correspondences" loading="lazy">
-            <div class="calibration-figure-copy">
-              <div><span>Human-in-the-loop review</span><strong>Crop, repair one point, or enter all 23 target centers</strong></div>
-              <small>Displayed residual is pre-final refit ↗</small>
-            </div>
-          </a>
-          <div class="calibration-quest-gallery">
-            <a class="calibration-card calibration-evidence-figure" href="../dossier/calibration-contact-sheet.png" target="_blank" rel="noreferrer">
+          <p class="calibration-quest-intro">Aligned D435i depth lifts each reviewed target center into 3D; a robust global fit maps those points to the corresponding Quest passthrough-camera observations.</p>
+          <div class="calibration-quest-story">
+            <a class="calibration-card calibration-evidence-figure calibration-quest-pairs" href="../dossier/calibration-contact-sheet.png" target="_blank" rel="noreferrer">
               <img src="../dossier/calibration-contact-sheet.png" alt="Representative paired Quest passthrough-camera and D435i RGB views of the calibration target" loading="lazy">
               <div class="calibration-figure-copy">
-                <div><span>Paired observations</span><strong>The same target seen from Quest PCA and D435i RGB</strong></div>
-                <small>Not proof of hardware sync ↗</small>
+                <div><span>Input / paired cameras</span><strong>The same target in Quest PCA and D435i RGB</strong></div>
               </div>
             </a>
-            <a class="calibration-card calibration-evidence-figure" href="../dossier/calibration/quest-final-validation.jpg" target="_blank" rel="noreferrer">
+            <a class="calibration-card calibration-evidence-figure calibration-review-shot" href="../dossier/calibration/quest-correspondence-review.png" target="_blank" rel="noreferrer">
+              <img src="../dossier/calibration/quest-correspondence-review.png" alt="Quest rig calibration review interface showing D435i aligned-depth samples and editable Quest target correspondences" loading="lazy">
+              <div class="calibration-figure-copy">
+                <div><span>Review / correspondences</span><strong>Crop, repair one center, or enter all 23 manually</strong></div>
+              </div>
+            </a>
+            <a class="calibration-card calibration-evidence-figure calibration-quest-result" href="../dossier/calibration/quest-final-validation.jpg" target="_blank" rel="noreferrer">
               <img src="../dossier/calibration/quest-final-validation.jpg" alt="Twenty reviewed Quest and D435i calibration poses with projected and observed target centers" loading="lazy">
               <div class="calibration-figure-copy">
-                <div><span>Reviewed solve set</span><strong>20 poses across 0.269–0.867 m and multiple target tilts</strong></div>
-                <small>Not a held-out benchmark ↗</small>
+                <div><span>Result / global fit</span><strong>Projected and reviewed centers across all 20 solve captures</strong></div>
               </div>
             </a>
           </div>
           <div class="calibration-quest-metrics" aria-label="D435i and Quest calibration metrics">
             <div class="calibration-metric"><span>Reviewed captures</span><strong>20</strong></div>
-            <div class="calibration-metric"><span>Source points</span><strong>460</strong></div>
-            <div class="calibration-metric"><span>Robust inliers</span><strong>446</strong></div>
+            <div class="calibration-metric"><span>Robust inliers</span><strong>446 / 460</strong></div>
             <div class="calibration-metric"><span>Global median</span><strong>0.744 px</strong></div>
-            <div class="calibration-metric"><span>Global mean</span><strong>0.950 px</strong></div>
-            <div class="calibration-metric"><span>Global p95</span><strong>2.473 px</strong></div>
           </div>
+          <p class="calibration-detail-line">Global mean 0.950 px · p95 2.473 px · reviewed range 0.269–0.867 m · estimated baseline 85.1 mm</p>
         </section>`;
       }
 
@@ -4660,30 +4681,20 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
             <img src="../dossier/calibration/on-headset-end-to-end.jpg" alt="Actual Quest passthrough capture with PT3 thermal energy aligned to the physical calibration-target apertures" loading="lazy">
             <div class="calibration-figure-copy">
               <div><span>Actual Quest output</span><strong>PT3 heat sampled through D435i geometry and placed in passthrough</strong></div>
-              <small>Technical validation capture ↗</small>
             </div>
           </a>
           <aside class="calibration-proof-sidebar">
-            <a class="calibration-card calibration-evidence-figure calibration-before-after" href="../dossier/calibration/quest-before-after.jpg" target="_blank" rel="noreferrer">
-              <img src="../dossier/calibration/quest-before-after.jpg" alt="Representative pre-fix Quest projection beside a final reviewed calibration result" loading="lazy">
-              <div class="calibration-figure-copy">
-                <div><span>Qualitative before / after</span><strong>Representative different poses and statistics—not a controlled numeric A/B</strong></div>
-                <small>Open comparison ↗</small>
-              </div>
-            </a>
             <article class="calibration-card calibration-hardware-note">
-              <span class="calibration-proof-label">Observed on Quest 3S hardware</span>
-              <strong>The complete production path ran with both sensors.</strong>
-              <p>The APK installed and launched; PT3 and D435i streaming stabilized together; production scenes opened; calibrated depth, calibrated thermal overlay, and Object Inspector appeared to work during normal use. No obvious blocking regression was observed.</p>
+              <span class="calibration-proof-label">Observed on Quest 3S</span>
+              <strong>Both sensor streams stabilized in the production build.</strong>
+              <p>The APK launched, production scenes opened, and calibrated depth and thermal overlays appeared to work during normal use. No obvious blocking regression was observed.</p>
             </article>
             <article class="calibration-card calibration-limit-card">
-              <h3>What this calibration does—and does not—prove</h3>
+              <h3>What remains outside this result</h3>
               <div class="calibration-limit-list">
-                <div class="calibration-limit-item"><strong>Geometric</strong><small>Aligns rays and surfaces; it does not establish absolute temperature accuracy.</small></div>
-                <div class="calibration-limit-item"><strong>Not synchronized</strong><small>No formal hardware timing or latency baseline was measured.</small></div>
-                <div class="calibration-limit-item"><strong>Real boundaries remain</strong><small>Parallax, depth edges, occlusion, and temporal lag can still create halos.</small></div>
-                <div class="calibration-limit-item"><strong>Mount-dependent</strong><small>Bracket flex, remounting, or sensor movement can invalidate the extrinsics.</small></div>
-                <div class="calibration-limit-item"><strong>Practical validation</strong><small>Formal profiler, lifecycle stress, and repeated USB reconnect testing remain unmeasured.</small></div>
+                <div class="calibration-limit-item"><strong>Accuracy scope</strong><small>This is geometric registration; absolute thermal accuracy was not established.</small></div>
+                <div class="calibration-limit-item"><strong>Runtime effects</strong><small>The cameras were not hardware-synchronized. Parallax, depth edges, occlusion, and temporal lag can still create halos.</small></div>
+                <div class="calibration-limit-item"><strong>Rig and test scope</strong><small>Mount flex can invalidate the extrinsics. Formal profiler, lifecycle-stress, and repeated USB-reconnect baselines remain unmeasured.</small></div>
               </div>
             </article>
           </aside>
@@ -4694,44 +4705,42 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
         <figure class="calibration-card calibration-evidence-figure calibration-method-hero">
           <img src="../dossier/calibration/sensor-capture-triplet.png" alt="One calibration-target capture shown as D435i RGB, visualized 16-bit depth, and PT3 thermal" loading="lazy">
           <figcaption class="calibration-figure-copy">
-            <div><span>One physical target · three sensor products</span><strong>The same 23 aperture centers appear in visible, depth, and thermal data</strong></div>
-            <small>Depth color is illustrative</small>
+            <div><span>Shared evidence / three sensors</span><strong>The same 23 aperture centers appear in visible, depth, and thermal data</strong></div>
           </figcaption>
         </figure>
         <article class="calibration-card calibration-method-copy">
           <div>
-            <span class="calibration-method-eyebrow">Why this worked</span>
-            <h3>One physical target, two reviewed solves.</h3>
-            <p>A heated backplate makes the printed aperture centers visible to the PT3 while the D435i sees the same geometry in RGB and depth. That shared evidence removes guesswork from the sensor-to-sensor and sensor-to-headset transforms.</p>
+            <span class="calibration-method-eyebrow">Calibration strategy</span>
+            <h3>Use D435i RGB as the shared hub.</h3>
+            <p>The heated apertures provide the same physical centers across modalities. The RealSense factory calibration connects live depth to RGB, leaving two unknown rigid transforms to solve from reviewed observations.</p>
           </div>
           <div class="calibration-method-list">
-            <div class="calibration-method-step"><span>01</span><div><strong>Solve PT3 optical ↔ D435i RGB</strong><small>30 paired poses recorded · 28 accepted · 644 reviewed correspondences</small></div></div>
-            <div class="calibration-method-step"><span>02</span><div><strong>Solve D435i RGB ↔ Quest PCA</strong><small>Aligned depth lifts 460 image points into 3D · robust fit retains 446 inliers</small></div></div>
-            <div class="calibration-method-step"><span>03</span><div><strong>Compose both transforms at runtime</strong><small>D435i depth anchors live surfaces; PT3 supplies heat; Quest supplies the live camera pose</small></div></div>
+            <div class="calibration-method-step"><span>01</span><div><strong>D435i RGB → PT3 optical</strong><small>Solve the PT3 camera model and rigid sensor-pair transform.</small></div></div>
+            <div class="calibration-method-step"><span>02</span><div><strong>D435i RGB → Quest PCA</strong><small>Lift reviewed D435i points into 3D with aligned depth, then fit them to Quest image points.</small></div></div>
           </div>
         </article>
         <div class="calibration-card calibration-runtime-map" aria-label="Calibration runtime frame graph">
           <div class="calibration-map-node">
             <span class="calibration-map-label">Surface geometry</span>
             <strong>D435i depth optical</strong>
-            <small>Valid live depth samples</small>
+            <small>Valid live surface points</small>
           </div>
-          <div class="calibration-map-connector">factory alignment →</div>
+          <div class="calibration-map-connector">factory RealSense alignment →</div>
           <div class="calibration-map-node hub">
             <span class="calibration-map-label">Shared hub</span>
             <strong>D435i RGB optical</strong>
-            <small>Reference frame for both reviewed transforms</small>
+            <small>Reference frame for both solves</small>
           </div>
           <div class="calibration-map-branches">
             <div class="calibration-map-branch">
-              <span class="calibration-map-label">Reviewed transform A</span>
-              <strong>PT3 optical → thermal sample</strong>
-              <small>Calibrated heat lookup</small>
+              <span class="calibration-map-label">Solve A</span>
+              <strong>D435i RGB → PT3 optical</strong>
+              <small>Sample the thermal frame</small>
             </div>
             <div class="calibration-map-branch">
-              <span class="calibration-map-label">Reviewed transform B</span>
-              <strong>Quest PCA → Unity world</strong>
-              <small>Live passthrough-camera pose</small>
+              <span class="calibration-map-label">Solve B</span>
+              <strong>D435i RGB → Quest PCA</strong>
+              <small>Render with the live PCA pose</small>
             </div>
           </div>
         </div>
@@ -4742,19 +4751,13 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
       return `<div class="calibration-workbench">
         <header class="calibration-mast">
           <div>
-            <div class="calibration-kicker">CAL-03 / multimodal geometric registration</div>
+            <div class="calibration-kicker">CAL-03 / camera registration</div>
             <h2>Aligning thermal and depth with passthrough.</h2>
-            <p class="calibration-summary">A heated target and two reviewed camera solves connect PT3 thermal, D435i geometry, and Quest 3S passthrough without hand-tuning each overlay.</p>
-          </div>
-          <div class="calibration-mast-metrics" aria-label="Calibration summary">
-            <div class="calibration-stat"><span>PT3 capture set</span><strong>30 / 28</strong></div>
-            <div class="calibration-stat"><span>Quest inliers</span><strong>446 / 460</strong></div>
-            <div class="calibration-stat"><span>Quest median</span><strong>0.744 px</strong></div>
+            <p class="calibration-summary">Two reviewed camera solves connect PT3 thermal, D435i geometry, and Quest 3S passthrough. This is geometric registration, not temperature validation.</p>
           </div>
         </header>
         <div class="calibration-tab-row">
           <nav class="software-tabs" aria-label="Calibration case-study views">${calibrationTabs(view)}</nav>
-          <span class="calibration-scope-chip">Geometric calibration · not radiometric validation</span>
         </div>
         <div class="calibration-canvas" id="calibrationCanvas">${renderCalibrationView(view)}</div>
       </div>`;
