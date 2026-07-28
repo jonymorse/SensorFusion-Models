@@ -32,9 +32,84 @@
           grid-template-columns: 70px minmax(54px, 1fr) 66px;
         }
       }
+
+      .viewer-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: grid;
+        place-items: center;
+        color: rgba(255, 248, 240, .54);
+        background:
+          radial-gradient(circle at 50% 46%, rgba(229, 111, 58, .08), transparent 24%),
+          #090a09;
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 240ms ease, visibility 0s linear 240ms;
+      }
+
+      .viewer-loader-inner {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font: 8px/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        text-transform: uppercase;
+        letter-spacing: .12em;
+      }
+
+      .viewer-loader-track {
+        position: relative;
+        width: 28px;
+        height: 1px;
+        overflow: hidden;
+        background: rgba(255, 248, 240, .18);
+      }
+
+      .viewer-loader-track::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: #e56f3a;
+        animation: viewerLoaderTrack 1.25s ease-in-out infinite;
+      }
+
+      .viewer-loader-error { display: none; }
+
+      html.model-ready .viewer-loader {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      html.model-error .viewer-loader-copy { display: none; }
+      html.model-error .viewer-loader-error { display: inline; }
+      html.model-error .viewer-loader-track::after {
+        transform: none;
+        animation: none;
+      }
+
+      @keyframes viewerLoaderTrack {
+        0% { transform: translateX(-100%); }
+        55%, 100% { transform: translateX(100%); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .viewer-loader,
+        .viewer-loader-track::after {
+          animation: none;
+          transition: none;
+        }
+      }
     </style>
   </head>
   <body>
+    <div class="viewer-loader" role="status" aria-live="polite">
+      <div class="viewer-loader-inner">
+        <span class="viewer-loader-track" aria-hidden="true"></span>
+        <span class="viewer-loader-copy">Loading assembly</span>
+        <span class="viewer-loader-error">Assembly unavailable</span>
+      </div>
+    </div>
     <main class="app-shell">
       <canvas id="assembly-canvas" aria-label="Interactive 3D assembly viewer"></canvas>
 
@@ -91,5 +166,19 @@
         <button type="button" id="clear-selection" aria-label="Clear selected component">×</button>
       </div>
     </main>
+    <script>
+      const partsList = document.getElementById('parts-list');
+      const modelLoadTimeout = window.setTimeout(() => {
+        document.documentElement.classList.add('model-error');
+      }, 20000);
+      const modelObserver = new MutationObserver(() => {
+        if (!partsList.children.length) return;
+        window.clearTimeout(modelLoadTimeout);
+        document.documentElement.classList.remove('model-error');
+        document.documentElement.classList.add('model-ready');
+        modelObserver.disconnect();
+      });
+      modelObserver.observe(partsList, { childList: true });
+    </script>
   </body>
 </html>

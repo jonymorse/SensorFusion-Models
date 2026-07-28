@@ -221,6 +221,88 @@
       transform: translateY(4px);
     }
 
+    .asset-load-positioned {
+      position: relative;
+    }
+
+    .asset-loader {
+      position: absolute;
+      inset: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      color: var(--quiet);
+      background:
+        linear-gradient(105deg, transparent 38%, rgba(var(--text-rgb), .045) 50%, transparent 62%),
+        color-mix(in srgb, var(--viewport) 94%, transparent);
+      background-size: 220% 100%, auto;
+      opacity: 0;
+      pointer-events: none;
+      animation:
+        assetLoaderReveal 160ms ease 180ms forwards,
+        assetLoaderSweep 1.7s ease-in-out 180ms infinite;
+      transition: opacity 180ms ease, visibility 0s linear 180ms;
+    }
+
+    .asset-loader-mark {
+      position: relative;
+      width: 22px;
+      height: 1px;
+      overflow: hidden;
+      background: var(--line-strong);
+    }
+
+    .asset-loader-mark::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      transform: translateX(-100%);
+      animation: assetLoaderMark 1.25s ease-in-out infinite;
+    }
+
+    .asset-loader-label {
+      font-family: var(--mono);
+      font-size: 7px;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: .11em;
+    }
+
+    .asset-loader.is-complete {
+      visibility: hidden;
+      opacity: 0;
+      animation: none;
+    }
+
+    .asset-loader.is-error {
+      color: var(--muted);
+      background: color-mix(in srgb, var(--viewport) 96%, transparent);
+      opacity: 1;
+      animation: none;
+    }
+
+    .asset-loader.is-error .asset-loader-mark::after {
+      transform: none;
+      animation: none;
+    }
+
+    @keyframes assetLoaderReveal {
+      to { opacity: 1; }
+    }
+
+    @keyframes assetLoaderSweep {
+      0%, 100% { background-position: 115% 0, 0 0; }
+      50% { background-position: -15% 0, 0 0; }
+    }
+
+    @keyframes assetLoaderMark {
+      0% { transform: translateX(-100%); }
+      55%, 100% { transform: translateX(100%); }
+    }
+
     .viewport-copy {
       position: absolute;
       left: 24px;
@@ -4075,6 +4157,8 @@
         scroll-behavior: auto !important;
       }
 
+      .asset-loader { opacity: 1; }
+      .asset-loader.is-complete { opacity: 0; }
       .thermal-cameo video { display: none; }
       .thermal-cameo-still { display: block; }
     }
@@ -5077,6 +5161,109 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
       body.dataset.palette = savedPalette;
       document.querySelectorAll('.palette-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.palette === savedPalette));
     }
+
+    function trackAssetLoading(asset) {
+      if (asset.dataset.assetLoadingTracked === 'true') return;
+      if (getComputedStyle(asset).display === 'none') return;
+
+      const svgImage = asset.namespaceURI === 'http://www.w3.org/2000/svg';
+      const frame = svgImage
+        ? asset.ownerSVGElement?.parentElement
+        : asset.parentElement;
+      if (!frame) return;
+
+      asset.dataset.assetLoadingTracked = 'true';
+      const positioned = getComputedStyle(frame).position === 'static';
+      if (positioned) frame.classList.add('asset-load-positioned');
+      frame.setAttribute('aria-busy', 'true');
+
+      const loader = document.createElement('span');
+      const label = asset.tagName === 'IFRAME'
+        ? 'Loading viewer'
+        : asset.tagName === 'VIDEO'
+          ? 'Loading video'
+          : 'Loading image';
+      loader.className = 'asset-loader';
+      loader.setAttribute('aria-hidden', 'true');
+      loader.innerHTML = `
+        <span class="asset-loader-mark"></span>
+        <span class="asset-loader-label">${label}</span>
+      `;
+      frame.append(loader);
+
+      let settled = false;
+      const cleanUp = () => {
+        window.setTimeout(() => {
+          loader.remove();
+          if (positioned) frame.classList.remove('asset-load-positioned');
+        }, 190);
+      };
+      const ready = () => {
+        if (settled) return;
+        settled = true;
+        frame.setAttribute('aria-busy', 'false');
+        loader.classList.add('is-complete');
+        cleanUp();
+      };
+      const failed = () => {
+        if (settled) return;
+        settled = true;
+        frame.setAttribute('aria-busy', 'false');
+        loader.querySelector('.asset-loader-label').textContent = 'Media unavailable';
+        loader.classList.add('is-error');
+      };
+
+      if (asset.tagName === 'IMG') {
+        asset.addEventListener('load', ready, { once: true });
+        asset.addEventListener('error', failed, { once: true });
+        if (asset.complete) asset.naturalWidth > 0 ? ready() : failed();
+        return;
+      }
+
+      if (asset.tagName === 'VIDEO') {
+        asset.addEventListener('loadeddata', ready, { once: true });
+        asset.addEventListener('error', failed, { once: true });
+        if (asset.readyState >= 2) ready();
+        return;
+      }
+
+      if (asset.tagName === 'IFRAME') {
+        asset.addEventListener('load', ready, { once: true });
+        asset.addEventListener('error', failed, { once: true });
+        try {
+          if (asset.contentDocument?.readyState === 'complete') ready();
+        } catch (_) {
+          // Cross-origin viewers still resolve through their load event.
+        }
+        return;
+      }
+
+      const href = asset.getAttribute('href') || asset.getAttribute('xlink:href');
+      if (!href) {
+        ready();
+        return;
+      }
+      const probe = new Image();
+      probe.addEventListener('load', ready, { once: true });
+      probe.addEventListener('error', failed, { once: true });
+      probe.src = new URL(href, document.baseURI).href;
+    }
+
+    function trackAssets(root = document) {
+      const selector = 'img, video, iframe, svg image';
+      if (root.matches?.(selector)) trackAssetLoading(root);
+      root.querySelectorAll?.(selector).forEach(trackAssetLoading);
+    }
+
+    const assetObserver = new MutationObserver(records => {
+      records.forEach(record => {
+        record.addedNodes.forEach(node => {
+          if (node.nodeType === Node.ELEMENT_NODE) trackAssets(node);
+        });
+      });
+    });
+    assetObserver.observe(document.body, { childList: true, subtree: true });
+    trackAssets();
 
     setActiveLayer('home');
   </script>
