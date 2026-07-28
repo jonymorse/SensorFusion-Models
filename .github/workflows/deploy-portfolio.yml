@@ -30,9 +30,18 @@ jobs:
 
       - name: Stage portfolio
         run: |
-          mkdir -p _site/portfolio
+          mkdir -p _site/portfolio _site/SensorFusionXR/viewer
           cp -R portfolio/headmount _site/portfolio/
           cp -R portfolio/assembly-viewer _site/portfolio/
+          cp -R portfolio/assembly-viewer/dossier/. _site/SensorFusionXR/
+          cp portfolio/assembly-viewer/index.html _site/SensorFusionXR/viewer/index.html
+          cp -R portfolio/assembly-viewer/assets _site/SensorFusionXR/viewer/
+          cp -R portfolio/assembly-viewer/models _site/SensorFusionXR/viewer/
+          sed -i \
+            -e 's#\.\./dossier/#./#g' \
+            -e 's#src="../?embed=dossier"#src="./viewer/?embed=dossier"#g' \
+            -e 's#href="../"#href="./viewer/"#g' \
+            _site/SensorFusionXR/index.html
           cp portfolio/pages-index.html _site/index.html
 
       - name: Upload Pages artifact
