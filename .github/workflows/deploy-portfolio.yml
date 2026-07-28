@@ -32,6 +32,8 @@ jobs:
         run: |
           mkdir -p _site/portfolio
           cp -R portfolio/headmount _site/portfolio/
+          cp -R portfolio/assembly-viewer _site/portfolio/
+          cp portfolio/pages-index.html _site/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
