@@ -1,0 +1,23 @@
+{
+  "created_at": "2026-07-29T05:24:16.017544-04:00",
+  "frame_count": 89,
+  "nominal_fps": 9.0,
+  "nominal_duration_s": 9.88888888888889,
+  "wall_duration_s": 10.01600000000326,
+  "codec": "mp4v",
+  "frame_size": [
+    640,
+    480
+  ],
+  "files": {
+    "rgb": "d435i_rgb.mp4",
+    "thermal": "pt3_thermal.mp4",
+    "fusion": "calibrated_fusion.mp4",
+    "depth": "d435i_depth_coverage.mp4"
+  },
+  "calibration": "C:\\Users\\jomo\\thermal\\_calibration\\dataset_recalibration_candidate_20260729_021428\\pt3_d435i_calibration_candidate.json",
+  "thermal_rotation": "ccw",
+  "initial_alpha": 0.72,
+  "initial_heat_only": true,
+  "initial_overlay_enabled": true
+}
