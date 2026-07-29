@@ -5682,8 +5682,11 @@
     }
 
     .calibration-validation-grid {
-      width: 100%;
+      width: auto;
+      max-width: 100%;
       height: 100%;
+      aspect-ratio: 1280 / 852;
+      justify-self: center;
       padding: 1px;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       grid-template-rows: repeat(2, minmax(0, 1fr));
@@ -5700,11 +5703,7 @@
       display: grid;
       place-items: center;
       overflow: hidden;
-      background:
-        linear-gradient(rgba(var(--text-rgb), .018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(var(--text-rgb), .018) 1px, transparent 1px),
-        #030504;
-      background-size: 18px 18px, 18px 18px, auto;
+      background: #030504;
     }
 
     .calibration-validation-grid figure::after {
@@ -5723,36 +5722,6 @@
       object-fit: contain;
       object-position: center;
       background: #030504;
-    }
-
-    .calibration-validation-grid figcaption {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      z-index: 3;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 5px 7px;
-      border: 1px solid rgba(255,255,255,.13);
-      border-radius: 4px;
-      color: #fff;
-      background: rgba(5,7,6,.78);
-      backdrop-filter: blur(8px);
-      font-family: var(--mono);
-      font-size: 6px;
-      line-height: 1;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .calibration-validation-grid figcaption::before {
-      content: "";
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 10px rgba(var(--accent-rgb), .72);
     }
 
     .calibration-pose-mosaic {
@@ -6389,12 +6358,12 @@
         label: 'Validate',
         eyebrow: 'Synchronized hardware replay',
         title: 'Return the solve to live sensor data.',
-        body: 'One 89-frame recording replays the raw D435i RGB, rotated PT3 thermal, calibrated heat-only fusion, and aligned depth coverage side by side.',
+        body: 'One synchronized replay pairs D435i RGB with PT3 thermal above the calibrated fusion and aligned depth result.',
         mediaGrid: [
-          { label: 'D435i / RGB', media: '../dossier/calibration/session-20260729/validation/d435i-rgb.mp4', poster: '../dossier/calibration/session-20260729/validation/d435i-rgb.jpg' },
-          { label: 'PT3 / thermal', media: '../dossier/calibration/session-20260729/validation/pt3-thermal.mp4', poster: '../dossier/calibration/session-20260729/validation/pt3-thermal.jpg' },
-          { label: 'Calibrated fusion', media: '../dossier/calibration/session-20260729/validation/calibrated-fusion.mp4', poster: '../dossier/calibration/session-20260729/validation/calibrated-fusion.jpg' },
-          { label: 'D435i / depth coverage', media: '../dossier/calibration/session-20260729/validation/d435i-depth.mp4', poster: '../dossier/calibration/session-20260729/validation/d435i-depth.jpg' }
+          { label: 'D435i RGB recording', media: '../dossier/calibration/session-20260729/validation/d435i-rgb-clean.mp4', poster: '../dossier/calibration/session-20260729/validation/d435i-rgb-clean.jpg' },
+          { label: 'PT3 thermal recording', media: '../dossier/calibration/session-20260729/validation/pt3-thermal-clean.mp4', poster: '../dossier/calibration/session-20260729/validation/pt3-thermal-clean.jpg' },
+          { label: 'Calibrated fusion recording', media: '../dossier/calibration/session-20260729/validation/calibrated-fusion-clean.mp4', poster: '../dossier/calibration/session-20260729/validation/calibrated-fusion-clean.jpg' },
+          { label: 'D435i depth coverage recording', media: '../dossier/calibration/session-20260729/validation/d435i-depth-clean.mp4', poster: '../dossier/calibration/session-20260729/validation/d435i-depth-clean.jpg' }
         ],
         fit: 'grid',
         mediaLabel: 'Synchronized July 29 RGB, thermal, calibrated-fusion, and depth replay',
@@ -6878,7 +6847,6 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
             <video ${calibrationSessionPlaying ? 'autoplay' : ''} muted loop playsinline preload="metadata" poster="${item.poster}" aria-label="${item.label}">
               <source src="${item.media}" type="video/mp4">
             </video>
-            <figcaption>${item.label}</figcaption>
           </figure>`).join('')}
         </div>`;
       }
