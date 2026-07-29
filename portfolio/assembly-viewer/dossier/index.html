@@ -4602,6 +4602,487 @@
       .calibration-session-media-dual { grid-template-columns: 1fr 1fr; }
     }
 
+    /* Calibration session: editorial redesign */
+    .calibration-workbench.calibration-session {
+      padding: clamp(22px, 2.6vw, 38px);
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(16px, 2vh, 24px);
+      background:
+        radial-gradient(circle at 8% 4%, rgba(var(--accent-rgb), .055), transparent 24%),
+        var(--viewport);
+      background-size: auto;
+    }
+
+    .calibration-session-mast {
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .calibration-session-mast h2 {
+      margin-top: 6px;
+      max-width: 19ch;
+      font-size: clamp(34px, 3.25vw, 52px);
+      line-height: .96;
+      letter-spacing: -.055em;
+    }
+
+    .calibration-session-mast .calibration-summary {
+      max-width: 62ch;
+      margin-top: 9px;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .calibration-session-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+    }
+
+    .calibration-session-state {
+      padding: 0;
+      color: var(--quiet);
+      font-size: 7px;
+    }
+
+    .calibration-session-state i {
+      width: 5px;
+      height: 5px;
+      box-shadow: none;
+    }
+
+    .calibration-session-play {
+      min-width: 164px;
+      padding: 11px 13px 11px 15px;
+      border-color: var(--line-strong);
+      border-radius: 8px;
+      color: var(--text);
+      background: transparent;
+      font-size: 8px;
+      transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
+    }
+
+    .calibration-session-play:hover {
+      border-color: rgba(var(--accent-rgb), .62);
+      background: var(--accent-soft);
+      transform: none;
+    }
+
+    .calibration-session-canvas {
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .calibration-session-stage {
+      grid-template-columns: minmax(0, 1.66fr) minmax(290px, .54fr);
+      gap: clamp(20px, 2.4vw, 34px);
+    }
+
+    .calibration-session-viewport,
+    .calibration-session-copy {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .calibration-session-viewport {
+      display: grid;
+      align-items: stretch;
+      overflow: hidden;
+      border: 1px solid rgba(var(--text-rgb), .11);
+      border-radius: 12px;
+      background: #060807;
+      box-shadow: 0 20px 46px rgba(0,0,0,.16);
+    }
+
+    .calibration-session-viewport::after {
+      display: none;
+    }
+
+    .calibration-session-media {
+      min-height: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.028), transparent 52%),
+        #060807;
+    }
+
+    .calibration-session-media > video,
+    .calibration-session-media > img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain !important;
+      object-position: center !important;
+    }
+
+    .calibration-session-media[data-media-fit="contain"] > img {
+      width: calc(100% - clamp(20px, 3vw, 48px));
+      height: calc(100% - clamp(20px, 3vw, 48px));
+    }
+
+    .calibration-session-media-dual {
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+      gap: 1px;
+      padding: 0;
+      background: rgba(255,255,255,.1);
+    }
+
+    .calibration-session-media-dual figure {
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.028), transparent 52%),
+        #060807;
+    }
+
+    .calibration-session-media-dual img,
+    .calibration-session-media-dual video {
+      width: calc(100% - 28px);
+      height: calc(100% - 56px);
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain !important;
+      object-position: center !important;
+    }
+
+    .calibration-session-media-dual figcaption {
+      top: 12px;
+      right: auto;
+      bottom: auto;
+      left: 14px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      color: rgba(255,255,255,.54);
+      background: transparent;
+      backdrop-filter: none;
+      font-size: 7px;
+    }
+
+    .calibration-session-hud {
+      display: none;
+    }
+
+    .calibration-session-hud span,
+    .calibration-session-hud small {
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      color: rgba(255,255,255,.45);
+      background: transparent;
+      backdrop-filter: none;
+      font-size: 7px;
+    }
+
+    .calibration-session-hud span {
+      margin-right: auto;
+    }
+
+    .calibration-session-hud i {
+      width: 5px;
+      height: 5px;
+      box-shadow: none;
+    }
+
+    .calibration-session-caption {
+      display: none;
+    }
+
+    .calibration-session-copy {
+      position: relative;
+      padding: 4px 0 2px clamp(20px, 2.3vw, 34px);
+      grid-template-rows: minmax(0, 1fr) auto auto;
+      gap: 18px;
+      border-left: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .calibration-session-chapter {
+      position: absolute;
+      top: -10px;
+      right: 0;
+      color: rgba(var(--text-rgb), .055);
+      font-family: var(--mono);
+      font-size: clamp(62px, 7vw, 104px);
+      font-weight: 650;
+      line-height: 1;
+      letter-spacing: -.08em;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .calibration-session-eyebrow {
+      position: relative;
+      z-index: 1;
+      color: var(--accent);
+      font-size: 8px;
+    }
+
+    .calibration-session-copy h3 {
+      position: relative;
+      z-index: 1;
+      max-width: 13ch;
+      margin-top: 12px;
+      font-size: clamp(28px, 2.55vw, 40px);
+      line-height: .98;
+    }
+
+    .calibration-session-copy > div > p {
+      position: relative;
+      z-index: 1;
+      max-width: 40ch;
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .calibration-session-metrics {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .calibration-session-metrics div {
+      min-height: 0;
+      padding: 10px 0;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 14px;
+      background: transparent;
+    }
+
+    .calibration-session-metrics span {
+      min-height: 0;
+      color: var(--quiet);
+      font-size: 7px;
+    }
+
+    .calibration-session-metrics strong {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 560;
+      text-align: right;
+    }
+
+    .calibration-session-note {
+      padding: 0 0 0 12px;
+      border-left: 1px solid var(--accent);
+      color: var(--quiet);
+      background: transparent;
+      font-size: 8px;
+      line-height: 1.5;
+    }
+
+    .calibration-session-footer {
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .calibration-session-timeline {
+      gap: 0;
+    }
+
+    .calibration-session-step {
+      min-width: 0;
+      padding: 12px 12px 10px 0;
+      border: 0;
+      border-radius: 0;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 8px;
+      color: var(--quiet);
+      background: transparent;
+    }
+
+    .calibration-session-step:not(:first-child) {
+      padding-left: 12px;
+      border-left: 1px solid var(--line);
+    }
+
+    .calibration-session-step:hover {
+      color: var(--text);
+      border-color: var(--line);
+    }
+
+    .calibration-session-step.active {
+      color: var(--text);
+      border-color: var(--line);
+      background: transparent;
+    }
+
+    .calibration-session-step span {
+      color: currentColor;
+      opacity: .58;
+    }
+
+    .calibration-session-step.active span {
+      color: var(--accent);
+      opacity: 1;
+    }
+
+    .calibration-session-step strong {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .01em;
+    }
+
+    .calibration-session-progress {
+      order: -1;
+      height: 1px;
+      margin-top: -1px;
+      background: transparent;
+    }
+
+    .calibration-session-progress span {
+      background: var(--accent);
+    }
+
+    @media (max-width: 1080px) {
+      .calibration-workbench.calibration-session {
+        overflow-y: auto;
+      }
+
+      .calibration-session-canvas {
+        min-height: auto;
+        overflow: visible;
+      }
+
+      .calibration-session-stage {
+        height: auto;
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .calibration-session-viewport {
+        min-height: 0;
+        aspect-ratio: 16 / 9;
+      }
+
+      .calibration-session-copy {
+        padding: 0;
+        grid-template-columns: minmax(0, 1.15fr) minmax(220px, .85fr);
+        grid-template-rows: auto auto;
+        column-gap: 28px;
+        border-left: 0;
+      }
+
+      .calibration-session-copy > div:first-of-type {
+        grid-row: 1 / 3;
+      }
+
+      .calibration-session-chapter {
+        display: none;
+      }
+
+      .calibration-session-copy h3 {
+        max-width: 18ch;
+      }
+
+      .calibration-session-metrics {
+        align-self: end;
+      }
+
+      .calibration-session-note {
+        align-self: start;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .calibration-workbench.calibration-session {
+        padding: 18px;
+        gap: 18px;
+      }
+
+      .calibration-session-mast {
+        grid-template-columns: 1fr;
+        align-items: start;
+        gap: 14px;
+      }
+
+      .calibration-session-mast h2 {
+        font-size: clamp(34px, 10.5vw, 48px);
+      }
+
+      .calibration-session-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .calibration-session-play {
+        min-width: 154px;
+      }
+
+      .calibration-session-canvas {
+        min-height: 0;
+      }
+
+      .calibration-session-stage {
+        grid-template-rows: auto auto;
+      }
+
+      .calibration-session-viewport {
+        min-height: 260px;
+        aspect-ratio: 16 / 10;
+      }
+
+      .calibration-session-media-dual {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
+
+      .calibration-session-media-dual img,
+      .calibration-session-media-dual video {
+        width: calc(100% - 20px);
+        height: calc(100% - 38px);
+      }
+
+      .calibration-session-copy {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 18px;
+      }
+
+      .calibration-session-copy > div:first-of-type {
+        grid-row: auto;
+      }
+
+      .calibration-session-copy h3 {
+        max-width: 15ch;
+        font-size: 30px;
+      }
+
+      .calibration-session-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .calibration-session-timeline {
+        grid-template-columns: repeat(6, minmax(104px, 1fr));
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .calibration-session-step {
+        padding: 11px 10px;
+      }
+
+      .calibration-session-step:first-child {
+        padding-left: 0;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation: none !important;
@@ -4764,7 +5245,7 @@
         },
         components: [
           { label: "Shared Target", type: "fixture", status: "Used", purpose: "Create the same 23 reference centers in RGB, depth, and thermal.", decisions: "Use a heated aperture target rather than a camera-only checkerboard.", process: "Record varied target distance, position, tilt, and rotation.", evidence: ["RGB/depth/thermal capture", "Pose sweep", "Target CAD"] },
-          { label: "PT3 ↔ D435i", type: "camera solve", status: "Solved", purpose: "Estimate the PT3 camera model and rigid transform from D435i RGB.", decisions: "Review all accepted target centers before promoting the solve.", process: "Use 28 accepted views × 23 points and inspect reprojection residuals.", evidence: ["644 correspondences", "28-view diagnostics", "0.338 px mean"] },
+          { label: "PT3 ↔ D435i", type: "camera solve", status: "Candidate", purpose: "Estimate the PT3 camera model and rigid transform from D435i RGB.", decisions: "Review all accepted target centers before promoting the solve.", process: "Use 28 accepted views × 23 points and inspect reprojection residuals.", evidence: ["644 correspondences", "28-view diagnostics", "0.290 px fit residual"] },
           { label: "D435i ↔ Quest", type: "camera solve", status: "Reviewed", purpose: "Estimate the D435i RGB to Quest passthrough-camera transform.", decisions: "Use aligned D435i depth to lift reviewed observations into 3D.", process: "Review 20 paired captures and run a robust global fit.", evidence: ["446 / 460 inliers", "0.744 px median", "Validation sheet"] },
           { label: "On-headset Check", type: "hardware", status: "Observed", purpose: "Confirm the calibrated pipeline runs with both sensors on Quest.", decisions: "Report practical hardware observations without claiming unmeasured stress or profiler results.", process: "Launch the production APK and exercise calibrated overlays during normal use.", evidence: ["Stable dual streaming", "On-headset capture", "No blocking regression observed"] }
         ]
@@ -4878,6 +5359,7 @@
         body: 'Each trigger saved D435i RGB, aligned 16-bit depth, and PT3 Y16 from the same physical pose. The heated aperture target makes one set of centers legible in visible and thermal imagery.',
         media: '../dossier/calibration/session-20260729/capture-sweep.mp4',
         poster: '../dossier/calibration/session-20260729/capture-sweep.jpg',
+        fit: 'wide',
         mediaLabel: 'Replayed from the preserved July 29 capture set',
         metrics: [['Bundles saved', '40'], ['D435i', '640 × 480'], ['PT3', '160 × 120']],
         note: 'The video is a reconstruction from the actual synchronized capture bundles—not a simulated sensor feed.',
@@ -4890,6 +5372,7 @@
         title: 'Move through the calibration volume.',
         body: 'Near, mid, far, tilted, rotated, and edge-of-frame poses constrain focal length, distortion, rotation, and translation. The camera rig stays fixed; only the target moves.',
         image: '../dossier/calibration/session-20260729/pose-atlas.jpg',
+        fit: 'contain',
         mediaLabel: 'Accepted-pose atlas from the candidate solve',
         metrics: [['Captured', '40'], ['Selected', '28'], ['Coverage', 'near → far']],
         note: 'Twenty-eight complete, readable poses were selected for review. Coverage matters more than perfectly centering the circles.',
@@ -4903,6 +5386,7 @@
         body: 'The tool proposes the same 23 physical aperture centers in RGB and thermal. Every selected pose was then inspected; one was entered manually and the rest were accepted after automatic proposal.',
         media: '../dossier/calibration/session-20260729/correspondence-review.mp4',
         poster: '../dossier/calibration/session-20260729/correspondence-review.jpg',
+        fit: 'wide',
         mediaLabel: 'Actual reviewed points and solver reprojections',
         metrics: [['Per pose', '23 points'], ['Auto-reviewed', '27'], ['Manual / legacy', '1']],
         note: 'Green marks are reviewed observations. The thermal panel compares those observations with the fitted projection.',
@@ -4916,6 +5400,7 @@
         body: 'The full-grid solver estimates the PT3 camera model and the rigid transform from D435i RGB optical space into PT3 optical space across all 28 accepted views.',
         media: '../dossier/calibration/session-20260729/solver-convergence.mp4',
         poster: '../dossier/calibration/session-20260729/solver-convergence.jpg',
+        fit: 'wide',
         mediaLabel: 'Twenty-eight fitted thermal reprojection diagnostics',
         metrics: [['Stereo RMS', '0.257 px'], ['Mean fit residual', '0.290 px'], ['Optical baseline', '45.11 mm']],
         note: 'These are internal residuals on accepted solve views. They are not a formal held-out physical-accuracy measurement.',
@@ -4928,6 +5413,7 @@
         title: 'Use RGB as the shared optical hub.',
         body: 'Aligned D435i depth lifts each target center into 3D. A second reviewed solve maps those points into the Quest passthrough camera, completing the path from PT3 heat to headset space.',
         image: '../dossier/calibration/quest-final-validation.jpg',
+        fit: 'contain',
         mediaLabel: 'Reviewed D435i-to-Quest solve across 20 captures',
         metrics: [['Reviewed', '20 captures'], ['Robust inliers', '446 / 460'], ['Global median', '0.744 px']],
         note: 'Runtime chain: PT3 optical → D435i RGB/depth optical → Quest PCA → live Unity world pose.',
@@ -4942,6 +5428,7 @@
         image: '../dossier/calibration/session-20260729/live-fusion-dashboard.jpg',
         secondaryMedia: '../dossier/quest-captures/mode-02-thermal-toggle.mp4',
         secondaryPoster: '../dossier/quest-captures/mode-02-thermal-toggle.jpg',
+        fit: 'dual',
         mediaLabel: 'Desktop candidate replay + actual Quest thermal-overlay capture',
         metrics: [['PT3 + D435i', 'stable'], ['Quest scenes', 'opened'], ['Blocking regressions', 'none seen']],
         note: 'The July 29 PT3/D435i result remains a candidate. Formal manually reviewed held-out validation, profiler baselines, and exhaustive lifecycle stress testing remain unfinished.',
@@ -5403,7 +5890,7 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
 
     function renderCalibrationSessionMedia(stage) {
       if (stage.secondaryMedia) {
-        return `<div class="calibration-session-media calibration-session-media-dual">
+        return `<div class="calibration-session-media calibration-session-media-dual" data-media-fit="${stage.fit}">
           <figure>
             <img src="${stage.image}" alt="Live desktop PT3 and D435i fusion dashboard using the July 29 calibration candidate">
             <figcaption>Desktop / candidate replay</figcaption>
@@ -5417,13 +5904,13 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
         </div>`;
       }
       if (stage.media) {
-        return `<div class="calibration-session-media">
+        return `<div class="calibration-session-media" data-media-fit="${stage.fit}">
           <video autoplay muted loop playsinline preload="metadata" poster="${stage.poster}" aria-label="${stage.mediaLabel}">
             <source src="${stage.media}" type="video/mp4">
           </video>
         </div>`;
       }
-      return `<div class="calibration-session-media">
+      return `<div class="calibration-session-media" data-media-fit="${stage.fit}">
         <img src="${stage.image}" alt="${stage.mediaLabel}" loading="eager">
       </div>`;
     }
@@ -5440,6 +5927,7 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
           <div class="calibration-session-caption">${stage.mediaLabel}</div>
         </article>
         <aside class="calibration-session-copy">
+          <span class="calibration-session-chapter" aria-hidden="true">${stage.index}</span>
           <div>
             <span class="calibration-session-eyebrow">${stage.index} / ${stage.eyebrow}</span>
             <h3>${stage.title}</h3>
@@ -5464,7 +5952,7 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
           <div class="calibration-session-actions">
             <span class="calibration-session-state"><i></i> July 29 candidate preserved</span>
             <button class="calibration-session-play" data-calibration-play type="button" aria-pressed="${calibrationSessionPlaying}">
-              ${calibrationSessionPlaying ? 'Pause session' : 'Play session'} <b>${calibrationSessionPlaying ? 'Ⅱ' : '▶'}</b>
+              ${calibrationSessionPlaying ? 'Pause walkthrough' : 'Play walkthrough'} <b>${calibrationSessionPlaying ? 'Ⅱ' : '▶'}</b>
             </button>
           </div>
         </header>
@@ -5653,7 +6141,7 @@ var stream  = <span class="code-call">OceanUSBStreaming.StartStreaming</span>(de
       const button = visualLayer.querySelector('[data-calibration-play]');
       if (!button) return;
       button.setAttribute('aria-pressed', String(calibrationSessionPlaying));
-      button.innerHTML = `${calibrationSessionPlaying ? 'Pause session' : 'Play session'} <b>${calibrationSessionPlaying ? 'Ⅱ' : '▶'}</b>`;
+      button.innerHTML = `${calibrationSessionPlaying ? 'Pause walkthrough' : 'Play walkthrough'} <b>${calibrationSessionPlaying ? 'Ⅱ' : '▶'}</b>`;
     }
 
     function stopCalibrationSession() {
