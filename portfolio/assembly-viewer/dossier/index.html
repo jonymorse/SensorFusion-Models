@@ -4554,12 +4554,9 @@
         border-left: 0;
       }
       .bridge-carousel-controls {
-        grid-template-columns: repeat(3, minmax(210px, 1fr));
-        padding-bottom: 3px;
-        overflow-x: auto;
-        scrollbar-width: none;
+        display: none;
       }
-      .bridge-carousel-controls::-webkit-scrollbar { display: none; }
+      .bridge-carousel { grid-template-rows: auto; }
     }
 
     @media (max-width: 560px) {
